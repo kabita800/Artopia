@@ -106,7 +106,7 @@
 
   <p class="auth-link">
     New here?
-    <a href="${pageContext.request.contextPath}/register">Create an account</a>
+    <a href="register.jsp">Create an account</a>
 
   </p>
 
