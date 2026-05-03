@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artopia — Online Art Marketplace</title>
+  <meta name="description" content="Artopia is Nepal's premier online art marketplace. Buy, sell and discover original artworks by talented Nepali artists." />
+  <link rel="stylesheet" href="Style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>" />
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+  <a class="nav-logo" href="views/home.jsp" style="cursor:pointer; text-decoration:none;">Art<span>opia</span></a>
+  <ul class="nav-links">
+    <li><a href="views/home.jsp">Home</a></li>
+    <li><a href="views/gallery.jsp" class="nav-gallery">Gallery</a></li>
+    <li><a href="views/artists.jsp" class="nav-artists">Artists</a></li>
+    <li><a href="views/about.jsp" class="nav-about">About</a></li>
+    <li><a href="views/contact.jsp" class="nav-contact">Contact</a></li>
+  </ul>
+  <div class="nav-actions" id="navActions">
+    <button class="btn-nav btn-nav-ghost" onclick="window.location.href='views/login.jsp'">Login</button>
+    <button class="btn-nav btn-nav-primary" onclick="window.location.href='views/register.jsp'">Join Artopia</button>
+  </div>
+  <div class="flex" style="gap:1rem;align-items:center">
+    <!-- Cart Button -->
+    <button onclick="window.location.href='views/checkout.jsp'" style="position:relative;padding:0.5rem;color:var(--text2);font-size:1.2rem;transition:color 0.2s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text2)'">
+      🛒
+      <span class="cart-count" style="position:absolute;top:-6px;right:-6px;background:var(--gold);color:var(--bg);width:18px;height:18px;border-radius:50%;font-size:0.65rem;font-weight:700;display:none;align-items:center;justify-content:center">0</span>
+    </button>
+    <div class="nav-hamburger" onclick="toggleMobileMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== TOAST CONTAINER ===== -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ===== ARTWORK MODAL ===== -->
+<div class="modal-overlay" onclick="if(event.target===this)closeModal()" id="modalOverlay">
+  <div class="modal-wrap" style="position:relative;max-width:900px;width:100%">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal" id="artworkModal">
+      <div class="modal-inner">
+        <img class="modal-img" src="" alt="" />
+        <div class="modal-content">
+          <div class="modal-category"></div>
+          <div class="modal-title"></div>
+          <div class="modal-artist-row">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&q=80" alt="Artist" class="artist-avatar" />
+            <div>
+              <div style="font-size:0.75rem;color:var(--text3)">Artist</div>
+              <div class="modal-artist-name" style="color:var(--text);font-weight:500;font-size:0.9rem"></div>
+            </div>
+          </div>
+          <p class="modal-desc"></p>
+          <div class="modal-meta">
+            <div class="meta-item"><div class="meta-label">Medium</div><div class="meta-value" id="meta-medium"></div></div>
+            <div class="meta-item"><div class="meta-label">Size</div><div class="meta-value" id="meta-size"></div></div>
+            <div class="meta-item"><div class="meta-label">Year</div><div class="meta-value" id="meta-year"></div></div>
+            <div class="meta-item"><div class="meta-label">Status</div><div class="meta-value" id="meta-status"></div></div>
+          </div>
+          <div class="modal-price-row">
+            <div class="modal-price"></div>
+          </div>
+          <div style="display:flex;gap:0.75rem">
+            <button class="btn-primary" id="modalBuyBtn" style="flex:1">Add to Cart</button>
+            <button class="btn-secondary" onclick="closeModal()" style="flex:1">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ESEWA PAYMENT OVERLAY ===== -->
+<div id="esewaOverlay" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:2rem">
+  <div style="background:#1a2c1a;border:2px solid #60bb46;border-radius:16px;padding:2.5rem;max-width:420px;width:100%;text-align:center;animation:slideUp 0.3s ease">
+    <div style="width:72px;height:72px;background:#60bb46;border-radius:50%;margin:0 auto 1.25rem;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:900;color:#fff;font-family:sans-serif">e</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.6rem;color:#fff;margin-bottom:0.5rem">eSewa Payment</div>
+    <div style="font-size:0.85rem;color:#8bc98b;margin-bottom:2rem">Secure payment powered by eSewa Nepal</div>
+    <div style="background:rgba(96,187,70,0.1);border:1px solid rgba(96,187,70,0.3);border-radius:8px;padding:1.25rem;margin-bottom:1.5rem;text-align:left">
+      <div style="font-size:0.75rem;color:#8bc98b;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem">Payment Summary</div>
+      <div style="display:flex;justify-content:space-between;font-size:0.9rem;color:#fff;margin-bottom:0.35rem">
+        <span>Merchant:</span><span style="color:#60bb46;font-weight:600">Artopia Nepal</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:0.9rem;color:#fff">
+        <span>Amount:</span><span id="esewaAmount" style="color:#60bb46;font-weight:700;font-size:1.05rem"></span>
+      </div>
+    </div>
+    <div style="margin-bottom:1.5rem">
+      <div style="font-size:0.8rem;color:#8bc98b;margin-bottom:0.5rem;text-align:left">eSewa Mobile Number</div>
+      <input id="esewaOtpPhone" type="text" readonly style="width:100%;background:rgba(96,187,70,0.1);border:1px solid rgba(96,187,70,0.4);border-radius:6px;padding:0.75rem 1rem;color:#fff;font-size:0.9rem" />
+      <div style="font-size:0.75rem;color:#8bc98b;margin-top:0.5rem">✓ OTP sent to your registered eSewa mobile number</div>
+    </div>
+    <div style="margin-bottom:1.75rem">
+      <div style="font-size:0.8rem;color:#8bc98b;margin-bottom:0.5rem;text-align:left">Enter OTP (for demo, use: 123456)</div>
+      <input type="text" maxlength="6" placeholder="6-digit OTP" id="esewaOtp" style="width:100%;background:rgba(96,187,70,0.1);border:1px solid rgba(96,187,70,0.4);border-radius:6px;padding:0.75rem 1rem;color:#fff;font-size:1.1rem;letter-spacing:0.3em;text-align:center" />
+    </div>
+    <div style="display:flex;gap:1rem">
+      <button onclick="esewaCancel()" style="flex:1;padding:0.85rem;border:1px solid rgba(96,187,70,0.4);border-radius:6px;color:#8bc98b;font-weight:500;cursor:pointer;background:none;font-family:inherit;transition:all 0.2s">Cancel</button>
+      <button onclick="esewaConfirm()" style="flex:1;padding:0.85rem;background:#60bb46;border-radius:6px;color:#fff;font-weight:700;cursor:pointer;border:none;font-family:inherit;font-size:0.95rem;transition:all 0.2s">Confirm Payment</button>
+    </div>
+    <div style="margin-top:1.5rem;font-size:0.72rem;color:#5a7a5a">🔒 256-bit SSL encrypted · Powered by eSewa Nepal Pvt. Ltd.</div>
+  </div>
+</div>
+
+<!-- ======================= PAGES ======================= -->
+
+<!-- ===== HOME PAGE ===== -->
+<div class="page active" id="page-home">
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-grid"></div>
+      <div class="hero-content">
+        <div class="hero-label">Nepal's Art Marketplace</div>
+        <h1>Discover <em>Original</em><br />Art That Moves You</h1>
+        <p class="hero-sub">Explore handpicked artworks from Nepal's most talented artists. Buy directly, support creativity.</p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="navigateTo('page-gallery')">Explore Gallery</button>
+          <button class="btn-secondary" onclick="navigateTo('page-register')">Sell Your Art</button>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hero-stat-num">200+</div><div class="hero-stat-label">Artworks</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">50+</div><div class="hero-stat-label">Artists</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">1,200+</div><div class="hero-stat-label">Happy Buyers</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">100%</div><div class="hero-stat-label">Original</div></div>
+      </div>
+    </section>
+
+    <!-- FEATURED -->
+    <div class="featured-section">
+      <div class="featured-inner">
+        <div class="featured-grid">
+          <div class="featured-img-wrap">
+            <img src="https://images.unsplash.com/photo-1578301978018-3005759f48f7?w=700&q=80" alt="Featured Artwork" class="featured-img" />
+            <div class="featured-tag">Featured</div>
+          </div>
+          <div class="featured-content">
+            <div class="section-label">Artwork of the Month</div>
+            <h2>Golden Horizon</h2>
+            <div class="featured-artist">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80" alt="Priya Sharma" class="artist-avatar" />
+              <div class="artist-name">
+                <strong>Priya Sharma</strong>
+                Oil Painting · Kathmandu
+              </div>
+            </div>
+            <p class="featured-desc">A mesmerizing landscape capturing the warmth of a Himalayan sunset with rich golden tones and sweeping brushwork. Oil on canvas, 24×36 inches. A rare collector's piece from Nepal's most celebrated young painter.</p>
+            <div class="featured-price">NPR 15,000</div>
+            <div class="featured-actions">
+              <button class="btn-primary" onclick="addToCart(1);navigateTo('page-checkout');renderCheckout()">Buy Now</button>
+              <button class="btn-secondary" onclick="openArtworkModal(1)">View Details</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BROWSE ARTWORKS (HOME PREVIEW) -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-label">Curated Collection</div>
+        <h2>Trending Artworks</h2>
+        <p>Discover original pieces handpicked from our community of talented Nepali artists.</p>
+      </div>
+      <div class="artwork-grid" id="homeArtworkGrid"></div>
+      <div style="text-align:center;margin-top:3rem">
+        <button class="btn-primary" onclick="navigateTo('page-gallery')">View All Artworks →</button>
+      </div>
+    </div>
+
+    <!-- ARTISTS PREVIEW -->
+    <div class="featured-section">
+      <div class="section" style="max-width:1280px;margin:0 auto">
+        <div class="section-header">
+          <div class="section-label">The Creators</div>
+          <h2>Meet Our Artists</h2>
+          <p>Talented artists from across Nepal sharing their vision with the world.</p>
+        </div>
+        <div class="artists-grid" id="homeArtistsGrid"></div>
+        <div style="text-align:center;margin-top:2.5rem">
+          <button class="btn-secondary" onclick="navigateTo('page-artists')">Meet All Artists →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-label">Simple Process</div>
+        <h2>How Artopia Works</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:2rem">
+        <div class="mission-card">
+          <div class="mission-icon">🔍</div>
+          <h3>Discover</h3>
+          <p>Browse hundreds of original artworks curated from Nepal's finest artists across all styles and mediums.</p>
+        </div>
+        <div class="mission-card">
+          <div class="mission-icon">💚</div>
+          <h3>Connect</h3>
+          <p>Read about the artist behind each piece. Every work tells a story. Connect with creators directly.</p>
+        </div>
+        <div class="mission-card">
+          <div class="mission-icon">🛒</div>
+          <h3>Buy Securely</h3>
+          <p>Pay safely via eSewa, card, or bank transfer. Your purchase is protected with our buyer guarantee.</p>
+        </div>
+        <div class="mission-card">
+          <div class="mission-icon">📦</div>
+          <h3>Receive</h3>
+          <p>Your artwork is carefully packaged and delivered to your door anywhere in Nepal.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA BANNER -->
+    <div style="background:linear-gradient(135deg,rgba(201,168,76,0.15) 0%,rgba(201,168,76,0.05) 100%);border-top:1px solid rgba(201,168,76,0.2);border-bottom:1px solid rgba(201,168,76,0.2)">
+      <div style="max-width:700px;margin:0 auto;text-align:center;padding:5rem 2rem">
+        <div class="section-label" style="margin-bottom:1rem">Are You an Artist?</div>
+        <h2 style="font-size:clamp(2rem,4vw,3rem);color:var(--cream);margin-bottom:1.25rem">Share Your Art With The World</h2>
+        <p style="color:var(--text2);margin-bottom:2.5rem">Join 50+ artists already selling on Artopia. Set up your profile in minutes and reach buyers across Nepal and beyond.</p>
+        <button class="btn-primary" onclick="navigateTo('page-register')">Start Selling Today</button>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>Artopia</h3>
+        <p>Nepal's premier online art marketplace connecting talented artists with passionate art lovers since 2025.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Marketplace</h4>
+        <ul>
+          <li><a onclick="navigateTo('page-gallery')">Browse Artworks</a></li>
+          <li><a onclick="navigateTo('page-artists')">Artists</a></li>
+          <li><a onclick="navigateTo('page-register')">Sell Art</a></li>
+          <li><a onclick="navigateTo('page-checkout');renderCheckout()">Cart</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a onclick="navigateTo('page-about')">About Us</a></li>
+          <li><a onclick="navigateTo('page-contact')">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a onclick="navigateTo('page-contact')">Help Center</a></li>
+          <li><a href="#">Buyer Protection</a></li>
+          <li><a href="#">Shipping Info</a></li>
+          <li><a href="#">Returns</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Artopia Nepal. All rights reserved. Built with ❤ for Nepali Art.</p>
+      <div class="footer-social">
+        <a href="#" class="social-btn">f</a>
+        <a href="#" class="social-btn">in</a>
+        <a href="#" class="social-btn">ig</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ===== GALLERY PAGE ===== -->
+<div class="page" id="page-gallery">
+  <main>
+    <div style="padding:3.5rem 2.5rem 1rem;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,0.06) 0%,transparent 60%)">
+      <div style="max-width:1280px;margin:0 auto">
+        <div class="section-label">All Artworks</div>
+        <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.5rem);color:var(--cream);margin:0.5rem 0 0.75rem">The Gallery</h1>
+        <p style="color:var(--text2);margin-bottom:2rem">Explore original artworks from Nepal's finest artists.</p>
+        <div class="search-bar">
+          <input type="text" id="searchInput" class="search-input" placeholder="Search artworks or artists..." />
+          <select id="sortSelect" class="sort-select">
+            <option value="popular">Most Popular</option>
+            <option value="newest">Newest First</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+          </select>
+        </div>
+        <div id="filterBar" class="filter-bar"></div>
+      </div>
+    </div>
+    <div class="section" style="padding-top:1.5rem">
+      <div class="artwork-grid" id="artworkGrid"></div>
+    </div>
+  </main>
+  <footer>
+    <div class="footer-bottom" style="max-width:1280px;margin:0 auto;padding:2rem 0">
+      <p>© 2025 Artopia Nepal. All rights reserved.</p>
+    </div>
+  </footer>
+</div>
+
+<!-- ===== ARTISTS PAGE ===== -->
+<div class="page" id="page-artists">
+  <main>
+    <div style="padding:5rem 2.5rem 2rem;text-align:center;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,0.07) 0%,transparent 60%)">
+      <div class="section-label">The Creators</div>
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.5rem);color:var(--cream);margin:0.5rem 0 1rem">Our Artists</h1>
+      <p style="color:var(--text2);max-width:500px;margin:0 auto">Talented, passionate, and original — meet the people whose hands bring beauty into the world.</p>
+    </div>
+    <div class="section">
+      <div class="artists-grid" id="artistsGrid"></div>
+    </div>
+    <!-- Artist spotlight -->
+    <div style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+      <div style="max-width:1280px;margin:0 auto;padding:5rem 2.5rem">
+        <div class="section-header">
+          <div class="section-label">In The Spotlight</div>
+          <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.75rem,3vw,2.5rem);color:var(--cream)">Priya Sharma — Artist of the Month</h2>
+        </div>
+        <div style="display:grid;grid-template-columns:200px 1fr;gap:3rem;align-items:start">
+          <div style="text-align:center">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&q=80" alt="Priya Sharma" style="width:140px;height:140px;border-radius:50%;border:3px solid var(--gold);margin:0 auto 1rem;display:block;object-fit:cover" />
+            <div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--cream)">Priya Sharma</div>
+            <div style="font-size:0.75rem;color:var(--gold);text-transform:uppercase;letter-spacing:0.1em;margin-top:0.25rem">Oil Painter</div>
+          </div>
+          <div>
+            <p style="color:var(--text2);line-height:1.8;margin-bottom:1.25rem">Priya Sharma is a Kathmandu-based oil painter whose work explores the interplay between Himalayan light and traditional Nepali cultural motifs. With over a decade of practice and exhibitions in Nepal, India, and South Korea, she is one of Artopia's founding artists.</p>
+            <p style="color:var(--text2);line-height:1.8;margin-bottom:1.75rem">Her paintings are held in private collections across the region and have been featured in several national art publications.</p>
+            <button class="btn-primary" onclick="navigateTo('page-gallery');setCategory('Painting')">View Her Work</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;padding:5rem 2rem">
+      <div class="section-label" style="margin-bottom:1rem">Join As An Artist</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--cream);margin-bottom:1rem">Ready to share your art?</h2>
+      <p style="color:var(--text2);margin-bottom:2rem">Create your free artist profile and start reaching buyers today.</p>
+      <button class="btn-primary" onclick="navigateTo('page-register')">Apply as Artist</button>
+    </div>
+  </main>
+  <footer>
+    <div class="footer-bottom" style="max-width:1280px;margin:0 auto;padding:2rem 0">
+      <p>© 2025 Artopia Nepal. All rights reserved.</p>
+    </div>
+  </footer>
+</div>
+
+<!-- ===== ABOUT PAGE ===== -->
+<div class="page" id="page-about">
+  <main>
+    <div class="about-hero">
+      <div class="section-label">Our Story</div>
+      <h1>Connecting Art &<br /><em style="color:var(--gold)">Collectors</em></h1>
+      <p>Artopia was born from a simple idea: every artist deserves a platform, and every art lover deserves access to original work.</p>
+    </div>
+
+    <div class="section">
+      <div class="mission-grid">
+        <div class="mission-card">
+          <div class="mission-icon">🎨</div>
+          <h3>Our Mission</h3>
+          <p>To create a secure and easy-to-use online platform where art can be presented and sold to more people across Nepal and beyond.</p>
+        </div>
+        <div class="mission-card">
+          <div class="mission-icon">🤝</div>
+          <h3>Our Vision</h3>
+          <p>A thriving creative economy in Nepal where talented artists can earn a sustainable livelihood from their passion.</p>
+        </div>
+        <div class="mission-card">
+          <div class="mission-icon">⭐</div>
+          <h3>Our Values</h3>
+          <p>Authenticity, creativity, and community. Every artwork on Artopia is 100% original and directly supports the artist who created it.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+      <div class="section">
+        <div class="section-header">
+          <div class="section-label">The Team</div>
+          <h2 style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--cream)">Meet the Developers</h2>
+          <p style="color:var(--text2)">CS5054NT Advanced Programming and Technologies · Itahari International College · 2025–26</p>
+        </div>
+        <div class="team-grid">
+          <div class="team-card">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80" alt="Kabita Giri" class="team-avatar" />
+            <div class="team-name">Kabita Giri</div>
+            <div class="team-role">Team Lead / Frontend</div>
+            <div class="team-id">ID: 24045896</div>
+          </div>
+          <div class="team-card">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80" alt="Abal Bohora" class="team-avatar" />
+            <div class="team-name">Abal Bohora</div>
+            <div class="team-role">Backend / Database</div>
+            <div class="team-id">ID: 24045788</div>
+          </div>
+          <div class="team-card">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&q=80" alt="Soni Shrestha" class="team-avatar" />
+            <div class="team-name">Soni Shrestha</div>
+            <div class="team-role">UI/UX Design</div>
+            <div class="team-id">ID: 24046088</div>
+          </div>
+          <div class="team-card">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80" alt="Jewanath Parajuli" class="team-avatar" />
+            <div class="team-name">Jewanath Parajuli</div>
+            <div class="team-role">Full Stack</div>
+            <div class="team-id">ID: 24045889</div>
+          </div>
+          <div class="team-card">
+            <img src="https://images.unsplash.com/photo-1552058544-f2b08422138a?w=200&q=80" alt="Utshab Gautam" class="team-avatar" />
+            <div class="team-name">Utshab Gautam</div>
+            <div class="team-role">Backend / Testing</div>
+            <div class="team-id">ID: 24046141</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-label">Tech Stack</div>
+        <h2 style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--cream)">Built With</h2>
+      </div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center">
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem 2rem;text-align:center">
+          <div style="font-size:1.5rem;margin-bottom:0.4rem">☕</div>
+          <div style="font-size:0.85rem;font-weight:600;color:var(--text)">Java</div>
+          <div style="font-size:0.72rem;color:var(--text2)">JSP · Servlets · J2EE</div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem 2rem;text-align:center">
+          <div style="font-size:1.5rem;margin-bottom:0.4rem">🗄️</div>
+          <div style="font-size:0.85rem;font-weight:600;color:var(--text)">MySQL</div>
+          <div style="font-size:0.72rem;color:var(--text2)">3NF Normalized</div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem 2rem;text-align:center">
+          <div style="font-size:1.5rem;margin-bottom:0.4rem">🌐</div>
+          <div style="font-size:0.85rem;font-weight:600;color:var(--text)">HTML / CSS</div>
+          <div style="font-size:0.72rem;color:var(--text2)">Responsive Frontend</div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem 2rem;text-align:center">
+          <div style="font-size:1.5rem;margin-bottom:0.4rem">🏗️</div>
+          <div style="font-size:0.85rem;font-weight:600;color:var(--text)">MVC Architecture</div>
+          <div style="font-size:0.72rem;color:var(--text2)">Model View Controller</div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem 2rem;text-align:center">
+          <div style="font-size:1.5rem;margin-bottom:0.4rem">💚</div>
+          <div style="font-size:0.85rem;font-weight:600;color:var(--text)">eSewa</div>
+          <div style="font-size:0.72rem;color:var(--text2)">Nepali Payment Gateway</div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div class="footer-bottom" style="max-width:1280px;margin:0 auto;padding:2rem 0">
+      <p>© 2025 Artopia Nepal · CS5054NT Project · Itahari International College</p>
+    </div>
+  </footer>
+</div>
+
+<!-- ===== CONTACT PAGE ===== -->
+<div class="page" id="page-contact">
+  <main>
+    <div style="padding:5rem 2.5rem 2rem;text-align:center;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,0.07) 0%,transparent 60%)">
+      <div class="section-label">Get In Touch</div>
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3rem);color:var(--cream);margin:0.5rem 0">Contact Us</h1>
+      <p style="color:var(--text2);max-width:500px;margin:0 auto">Questions, feedback, or partnership opportunities — we'd love to hear from you.</p>
+    </div>
+    <div class="section">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h2>Let's Talk</h2>
+          <p>Whether you're an artist wanting to join, a buyer with a question, or a partner looking to collaborate, our team is ready to help.</p>
+          <div class="contact-details">
+            <div class="contact-detail">
+              <div class="contact-icon">📍</div>
+              <div class="contact-detail-text">
+                <h4>Location</h4>
+                <p>Itahari, Sunsari, Koshi Province, Nepal</p>
+              </div>
+            </div>
+            <div class="contact-detail">
+              <div class="contact-icon">📧</div>
+              <div class="contact-detail-text">
+                <h4>Email</h4>
+                <p>hello@artopia.com.np</p>
+              </div>
+            </div>
+            <div class="contact-detail">
+              <div class="contact-icon">📞</div>
+              <div class="contact-detail-text">
+                <h4>Phone</h4>
+                <p>+977-025-123456</p>
+              </div>
+            </div>
+            <div class="contact-detail">
+              <div class="contact-icon">🕐</div>
+              <div class="contact-detail-text">
+                <h4>Hours</h4>
+                <p>Sunday–Friday · 9AM – 6PM NPT</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="contact-form">
+          <h3>Send a Message</h3>
+          <form onsubmit="submitContact(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Your Name</label>
+                <input type="text" class="form-input" placeholder="Hari Bahadur" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-input" placeholder="hari@example.com" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Subject</label>
+              <select class="form-select">
+                <option>General Inquiry</option>
+                <option>Artist Application</option>
+                <option>Purchase Support</option>
+                <option>Partnership</option>
+                <option>Technical Issue</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Message</label>
+              <textarea class="form-textarea" placeholder="Write your message here..." required></textarea>
+            </div>
+            <button type="submit" class="btn-full">Send Message →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div class="footer-bottom" style="max-width:1280px;margin:0 auto;padding:2rem 0">
+      <p>© 2025 Artopia Nepal. All rights reserved.</p>
+    </div>
+  </footer>
+</div>
+
+<!-- ===== LOGIN PAGE ===== -->
+<div class="page" id="page-login">
+  <div class="auth-page">
+    <div class="auth-card">
+      <div style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gold);font-weight:900;margin-bottom:1.5rem;text-align:center">Artopia</div>
+      <h2>Welcome Back</h2>
+      <p>Sign in to continue your art journey</p>
+      <form onsubmit="doLogin(event)">
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" id="loginEmail" class="form-input" placeholder="you@example.com" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="loginPass" class="form-input" placeholder="••••••••" required />
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
+          <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.8rem;color:var(--text2);cursor:pointer">
+            <input type="checkbox" style="accent-color:var(--gold)" /> Remember me
+          </label>
+          <a href="#" style="font-size:0.8rem;color:var(--gold)">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn-full">Sign In →</button>
+      </form>
+      <div class="form-divider"><span>or continue as</span></div>
+      <button onclick="navigateTo('page-artist-dashboard')" style="width:100%;padding:0.75rem;border:1px solid rgba(201,168,76,0.3);border-radius:4px;color:var(--text2);font-size:0.875rem;background:var(--gold-dim);transition:all 0.2s;margin-bottom:0.75rem" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.3)'">
+        🎨 Demo: Artist Dashboard
+      </button>
+      <div class="auth-switch">Don't have an account? <a onclick="navigateTo('page-register')" style="cursor:pointer">Join Artopia</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== REGISTER PAGE ===== -->
+<div class="page" id="page-register">
+  <div class="auth-page">
+    <div class="auth-card" style="max-width:500px">
+      <div style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gold);font-weight:900;margin-bottom:1.5rem;text-align:center">Artopia</div>
+      <h2>Create Account</h2>
+      <p>Join Nepal's art community today</p>
+      <div class="role-cards">
+        <div class="role-card selected" data-role="customer" onclick="selectRole('customer')">
+          <div class="role-card-icon">🖼️</div>
+          <div class="role-card-name">Art Buyer</div>
+        </div>
+        <div class="role-card" data-role="artist" onclick="selectRole('artist')">
+          <div class="role-card-icon">🎨</div>
+          <div class="role-card-name">Artist</div>
+        </div>
+      </div>
+      <form onsubmit="doRegister(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" id="regName" class="form-input" placeholder="Hari Bahadur" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="regEmail" class="form-input" placeholder="you@example.com" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" id="regPass" class="form-input" placeholder="••••••••" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone (Optional)</label>
+            <input type="tel" class="form-input" placeholder="+977 98XXXXXXXX" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">City</label>
+          <select class="form-select">
+            <option>Kathmandu</option><option>Biratnagar</option><option>Pokhara</option>
+            <option>Lalitpur</option><option>Bhaktapur</option><option>Itahari</option><option>Other</option>
+          </select>
+        </div>
+        <div style="margin-bottom:1.5rem">
+          <label style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.8rem;color:var(--text2);cursor:pointer;line-height:1.5">
+            <input type="checkbox" style="accent-color:var(--gold);margin-top:2px" required />
+            I agree to the <a href="#" style="color:var(--gold)">Terms of Service</a> and <a href="#" style="color:var(--gold)">Privacy Policy</a>
+          </label>
+        </div>
+        <button type="submit" class="btn-full">Create Account →</button>
+      </form>
+      <div class="auth-switch">Already have an account? <a onclick="navigateTo('page-login')" style="cursor:pointer">Sign In</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CHECKOUT PAGE ===== -->
+<div class="page" id="page-checkout">
+  <main class="checkout-page">
+    <div style="margin-bottom:2rem">
+      <div class="section-label">Secure Checkout</div>
+      <h1 style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--cream);margin-top:0.5rem">Complete Your Order</h1>
+    </div>
+    <div class="checkout-grid">
+      <!-- LEFT: Form -->
+      <div style="display:flex;flex-direction:column;gap:1.5rem">
+        <!-- Billing Info -->
+        <div class="checkout-form-card">
+          <h3>Billing Information</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Full Name</label>
+              <input type="text" id="billingName" class="form-input" placeholder="Hari Bahadur Thapa" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" id="billingEmail" class="form-input" placeholder="hari@example.com" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Phone Number</label>
+              <input type="tel" class="form-input" placeholder="+977 98XXXXXXXX" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">City</label>
+              <select class="form-select">
+                <option>Kathmandu</option><option>Biratnagar</option><option>Pokhara</option><option>Lalitpur</option><option>Itahari</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Delivery Address</label>
+            <input type="text" class="form-input" placeholder="Street address, ward number, area..." />
+          </div>
+        </div>
+
+        <!-- Payment Methods -->
+        <div class="checkout-form-card">
+          <h3>Payment Method</h3>
+          <div class="payment-methods">
+            <!-- eSewa -->
+            <div class="payment-method selected" data-method="esewa" onclick="selectPayment('esewa')">
+              <input type="radio" name="payment" value="esewa" checked />
+              <div style="width:48px;height:28px;background:#60bb46;border-radius:5px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;font-family:sans-serif;font-size:0.8rem">e</div>
+              <div>
+                <div class="payment-method-name">eSewa</div>
+                <div class="payment-method-desc">Nepali mobile wallet — fast & secure</div>
+              </div>
+              <div class="esewa-badge">✓ Nepal's #1</div>
+            </div>
+            <!-- Card -->
+            <div class="payment-method" data-method="card" onclick="selectPayment('card')">
+              <input type="radio" name="payment" value="card" />
+              <div style="width:48px;height:28px;background:linear-gradient(135deg,#1a1f71,#0066cc);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:0.65rem;color:#fff;font-weight:700">VISA</div>
+              <div>
+                <div class="payment-method-name">Credit / Debit Card</div>
+                <div class="payment-method-desc">Visa, Mastercard, Connect IPS</div>
+              </div>
+            </div>
+            <!-- Bank Transfer -->
+            <div class="payment-method" data-method="bank" onclick="selectPayment('bank')">
+              <input type="radio" name="payment" value="bank" />
+              <div style="width:48px;height:28px;background:var(--bg2);border:1px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:0.65rem;color:var(--text2);font-weight:700">BANK</div>
+              <div>
+                <div class="payment-method-name">Bank Transfer</div>
+                <div class="payment-method-desc">Direct transfer · 1-2 business days</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- eSewa Fields -->
+          <div id="esewaFields">
+            <div class="esewa-logo-big">
+              <div class="esewa-icon">e</div>
+              <div>
+                <strong>eSewa Nepal</strong>
+                <span>Enter your registered mobile number</span>
+              </div>
+            </div>
+            <div class="esewa-form">
+              <div class="form-group" style="margin:0">
+                <label class="form-label">eSewa Registered Mobile Number</label>
+                <input type="tel" id="esewaPhone" class="form-input" placeholder="98XXXXXXXX" maxlength="10" />
+              </div>
+              <div style="background:rgba(96,187,70,0.08);border:1px solid rgba(96,187,70,0.2);border-radius:6px;padding:0.875rem 1rem;font-size:0.8rem;color:#8bc98b">
+                💚 You'll receive an OTP on your eSewa app to confirm payment. Funds are held securely until delivery is confirmed.
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Fields -->
+          <div id="cardFields" style="display:none">
+            <div class="form-group">
+              <label class="form-label">Card Number</label>
+              <input type="text" id="cardNumber" class="form-input" placeholder="1234 5678 9012 3456" maxlength="19" oninput="this.value=this.value.replace(/\D/g,'').replace(/(.{4})/g,'$1 ').trim()" />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Expiry Date</label>
+                <input type="text" class="form-input" placeholder="MM/YY" maxlength="5" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">CVV</label>
+                <input type="text" class="form-input" placeholder="•••" maxlength="3" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Cardholder Name</label>
+              <input type="text" class="form-input" placeholder="As printed on card" />
+            </div>
+          </div>
+
+          <!-- Bank Transfer Fields -->
+          <div id="bankFields" style="display:none">
+            <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1.25rem">
+              <div style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:1rem">Bank Account Details</div>
+              <div style="display:grid;gap:0.5rem;font-size:0.83rem">
+                <div style="display:flex;justify-content:space-between"><span style="color:var(--text2)">Bank:</span><span style="color:var(--text)">Nepal Investment Mega Bank</span></div>
+                <div style="display:flex;justify-content:space-between"><span style="color:var(--text2)">Account Name:</span><span style="color:var(--text)">Artopia Nepal Pvt. Ltd.</span></div>
+                <div style="display:flex;justify-content:space-between"><span style="color:var(--text2)">Account No:</span><span style="color:var(--gold);font-weight:600">0021234567890</span></div>
+                <div style="display:flex;justify-content:space-between"><span style="color:var(--text2)">Branch:</span><span style="color:var(--text)">Itahari Branch</span></div>
+              </div>
+              <div style="margin-top:1rem;font-size:0.77rem;color:var(--text3)">⚠ Upload payment proof after transfer. Order confirms within 24 hours.</div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="placeOrder(event)" style="padding:1rem;font-size:1rem">
+          🔒 Place Order Securely
+        </button>
+        <p style="text-align:center;font-size:0.77rem;color:var(--text3)">Your payment information is encrypted with 256-bit SSL.</p>
+      </div>
+
+      <!-- RIGHT: Order Summary -->
+      <div>
+        <div class="checkout-summary">
+          <h3>Order Summary</h3>
+          <div class="order-items" id="checkoutItems">
+            <!-- Populated by JS -->
+          </div>
+          <div class="order-totals">
+            <div class="order-total-row">
+              <span>Subtotal</span>
+              <span id="checkoutSubtotal">NPR 0</span>
+            </div>
+            <div class="order-total-row">
+              <span>Shipping</span>
+              <span id="checkoutShipping">NPR 500</span>
+            </div>
+            <div class="order-total-row">
+              <span>Tax (13% VAT)</span>
+              <span>Included</span>
+            </div>
+            <div class="order-total-row final">
+              <span>Total</span>
+              <span id="checkoutTotal">NPR 0</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:1.25rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius2);padding:1.25rem">
+          <div style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:0.75rem">🛡 Buyer Protection</div>
+          <ul style="display:flex;flex-direction:column;gap:0.5rem">
+            <li style="font-size:0.77rem;color:var(--text2)">✓ 100% original artwork guaranteed</li>
+            <li style="font-size:0.77rem;color:var(--text2)">✓ Secure payment via eSewa / card</li>
+            <li style="font-size:0.77rem;color:var(--text2)">✓ 7-day return if artwork damaged</li>
+            <li style="font-size:0.77rem;color:var(--text2)">✓ Delivered anywhere in Nepal</li>
+          </ul>
+        </div>
+        <div style="margin-top:1rem;background:rgba(96,187,70,0.08);border:1px solid rgba(96,187,70,0.2);border-radius:8px;padding:1rem;display:flex;align-items:center;gap:0.75rem">
+          <div style="width:32px;height:32px;background:#60bb46;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;flex-shrink:0;font-family:sans-serif;font-size:0.8rem">e</div>
+          <div>
+            <div style="font-size:0.8rem;color:#60bb46;font-weight:600">eSewa Accepted</div>
+            <div style="font-size:0.72rem;color:#8bc98b">Nepal's most trusted digital wallet</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ===== ARTIST DASHBOARD ===== -->
+<div class="page" id="page-artist-dashboard">
+  <main>
+    <div class="dashboard-layout">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-user">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80" alt="Artist" class="sidebar-avatar" />
+          <div class="sidebar-name">Kabita Giri</div>
+          <div class="sidebar-role">Artist</div>
+        </div>
+        <nav class="sidebar-nav">
+          <a onclick="showDashTab('tab-overview')" class="sidebar-link active" id="link-overview">
+            <span class="sidebar-link-icon">📊</span> Overview
+          </a>
+          <a onclick="showDashTab('tab-artworks')" class="sidebar-link" id="link-artworks">
+            <span class="sidebar-link-icon">🖼️</span> My Artworks
+          </a>
+          <a onclick="showDashTab('tab-upload')" class="sidebar-link" id="link-upload">
+            <span class="sidebar-link-icon">⬆️</span> Upload New
+          </a>
+          <a onclick="showDashTab('tab-sales')" class="sidebar-link" id="link-sales">
+            <span class="sidebar-link-icon">💰</span> Sales
+          </a>
+          <a onclick="showDashTab('tab-profile')" class="sidebar-link" id="link-profile">
+            <span class="sidebar-link-icon">👤</span> Profile
+          </a>
+          <div style="height:1px;background:var(--border);margin:1rem 0"></div>
+          <a onclick="navigateTo('page-gallery')" class="sidebar-link">
+            <span class="sidebar-link-icon">🏠</span> Back to Gallery
+          </a>
+          <a onclick="doLogout()" class="sidebar-link" style="color:var(--red)">
+            <span class="sidebar-link-icon">🚪</span> Logout
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="dashboard-content">
+
+        <!-- Overview Tab -->
+        <div id="tab-overview">
+          <div class="dash-greeting">
+            <h2>Welcome back, Kabita 👋</h2>
+            <p>Here's what's happening with your art today.</p>
+          </div>
+          <div class="dash-stats">
+            <div class="dash-stat">
+              <div class="dash-stat-num">12</div>
+              <div class="dash-stat-label">Total Artworks</div>
+              <div class="dash-stat-change">↑ 2 this month</div>
+            </div>
+            <div class="dash-stat">
+              <div class="dash-stat-num">7</div>
+              <div class="dash-stat-label">Artworks Sold</div>
+              <div class="dash-stat-change">↑ 1 this week</div>
+            </div>
+            <div class="dash-stat">
+              <div class="dash-stat-num" style="font-size:1.4rem">NPR 85K</div>
+              <div class="dash-stat-label">Total Earnings</div>
+              <div class="dash-stat-change">↑ 12% vs last month</div>
+            </div>
+            <div class="dash-stat">
+              <div class="dash-stat-num">430</div>
+              <div class="dash-stat-label">Total Likes</div>
+              <div class="dash-stat-change">↑ 32 this week</div>
+            </div>
+          </div>
+          <div class="dash-table">
+            <div class="dash-table-header">
+              <h3>Recent Artworks</h3>
+              <button onclick="showDashTab('tab-upload')" class="btn-primary" style="padding:0.5rem 1.25rem;font-size:0.8rem">+ Upload New</button>
+            </div>
+            <table>
+              <thead><tr><th>Artwork</th><th>Category</th><th>Price</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="artistArtTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Artworks Tab -->
+        <div id="tab-artworks" style="display:none">
+          <div class="dash-greeting">
+            <h2>My Artworks</h2>
+            <p>Manage and edit your uploaded artworks.</p>
+          </div>
+          <div class="artwork-grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))">
+            <!-- reuse artwork cards -->
+          </div>
+          <div style="margin-top:1.5rem" id="myArtworksGrid"></div>
+        </div>
+
+        <!-- Upload Tab -->
+        <div id="tab-upload" style="display:none">
+          <div class="dash-greeting">
+            <h2>Upload Artwork</h2>
+            <p>Share your latest creation with the world.</p>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius2);padding:2.5rem;max-width:700px">
+            <form onsubmit="submitArtwork(event)">
+              <div class="upload-dropzone" onclick="document.getElementById('artImageInput').click()">
+                <input type="file" id="artImageInput" accept="image/*" style="display:none" onchange="handleImageUpload(this)" />
+                <div class="upload-icon">🖼️</div>
+                <div class="upload-text">Click to upload or drag & drop your artwork image<br /><strong>JPG, PNG, WEBP</strong> · Max 10MB</div>
+              </div>
+              <div id="uploadPreview"></div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Artwork Title *</label>
+                  <input type="text" id="artTitle" class="form-input" placeholder="e.g. Mountain Sunset" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Category *</label>
+                  <select class="form-select">
+                    <option>Painting</option><option>Digital Art</option><option>Watercolor</option>
+                    <option>Sculpture</option><option>Photography</option><option>Mixed Media</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Description</label>
+                <textarea class="form-textarea" placeholder="Tell buyers about this artwork — its inspiration, technique, story..." style="min-height:100px"></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Medium</label>
+                  <input type="text" class="form-input" placeholder="e.g. Oil on Canvas" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Dimensions</label>
+                  <input type="text" class="form-input" placeholder='e.g. 24"×36"' />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Year Created</label>
+                  <input type="number" class="form-input" placeholder="2025" min="1900" max="2026" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Price (NPR) *</label>
+                  <input type="number" class="form-input" placeholder="e.g. 15000" min="100" required />
+                </div>
+              </div>
+              <div style="display:flex;gap:1rem;margin-top:0.5rem">
+                <button type="submit" class="btn-primary" style="flex:2;padding:0.9rem">Upload Artwork</button>
+                <button type="button" class="btn-secondary" style="flex:1;padding:0.9rem" onclick="showDashTab('tab-overview')">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Sales Tab -->
+        <div id="tab-sales" style="display:none">
+          <div class="dash-greeting">
+            <h2>Sales History</h2>
+            <p>Track your artwork sales and earnings.</p>
+          </div>
+          <div class="dash-table">
+            <div class="dash-table-header"><h3>Recent Transactions</h3></div>
+            <table>
+              <thead><tr><th>Date</th><th>Artwork</th><th>Buyer</th><th>Amount</th><th>Payment</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>2026-03-28</td><td>Golden Horizon</td><td>Ram P.</td><td style="color:var(--gold)">NPR 15,000</td><td><span style="background:rgba(96,187,70,0.15);color:#60bb46;padding:0.2rem 0.6rem;border-radius:50px;font-size:0.72rem;font-weight:600">eSewa</span></td><td><span class="status-badge available">Completed</span></td></tr>
+                <tr><td>2026-03-15</td><td>Stone & Soul</td><td>Sita M.</td><td style="color:var(--gold)">NPR 35,000</td><td><span style="background:rgba(96,187,70,0.15);color:#60bb46;padding:0.2rem 0.6rem;border-radius:50px;font-size:0.72rem;font-weight:600">eSewa</span></td><td><span class="status-badge available">Completed</span></td></tr>
+                <tr><td>2026-02-20</td><td>Crimson Dance</td><td>Hari B.</td><td style="color:var(--gold)">NPR 18,500</td><td><span style="background:rgba(201,168,76,0.15);color:var(--gold);padding:0.2rem 0.6rem;border-radius:50px;font-size:0.72rem;font-weight:600">Card</span></td><td><span class="status-badge pending">Processing</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2rem">
+            <div class="dash-stat"><div class="dash-stat-num" style="font-size:1.4rem;color:#60bb46">NPR 68.5K</div><div class="dash-stat-label">via eSewa</div></div>
+            <div class="dash-stat"><div class="dash-stat-num" style="font-size:1.4rem">NPR 18.5K</div><div class="dash-stat-label">via Card</div></div>
+            <div class="dash-stat"><div class="dash-stat-num" style="font-size:1.4rem">NPR 87K</div><div class="dash-stat-label">Total Earned</div></div>
+          </div>
+        </div>
+
+        <!-- Profile Tab -->
+        <div id="tab-profile" style="display:none">
+          <div class="dash-greeting">
+            <h2>My Profile</h2>
+            <p>Manage your artist profile and public page.</p>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius2);padding:2.5rem;max-width:600px">
+            <div style="display:flex;align-items:center;gap:1.5rem;margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--border)">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80" alt="Profile" style="width:80px;height:80px;border-radius:50%;border:2px solid var(--gold)" />
+              <div>
+                <div style="font-weight:600;color:var(--text)">Kabita Giri</div>
+                <div style="font-size:0.8rem;color:var(--gold);margin-bottom:0.5rem">Verified Artist</div>
+                <button onclick="showToast('Photo upload coming soon','info')" style="font-size:0.78rem;color:var(--text2);border:1px solid var(--border);padding:0.3rem 0.75rem;border-radius:4px;cursor:pointer;background:none;font-family:inherit">Change Photo</button>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Display Name</label>
+                <input type="text" class="form-input" value="Kabita Giri" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Specialty</label>
+                <input type="text" class="form-input" value="Oil Painting" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Bio</label>
+              <textarea class="form-textarea" style="min-height:90px">Nepali artist passionate about capturing light and emotion through oil painting. Based in Kathmandu.</textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" value="kabita@artopia.com.np" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Phone</label>
+                <input type="tel" class="form-input" value="+977 984567890" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">eSewa Number (for receiving payments)</label>
+              <input type="tel" class="form-input" placeholder="98XXXXXXXX" value="9845678901" style="border-color:rgba(96,187,70,0.4)" />
+              <div style="font-size:0.75rem;color:#8bc98b;margin-top:0.35rem">💚 Payments will be sent to this eSewa number</div>
+            </div>
+            <button class="btn-full" onclick="showToast('Profile updated!','success')">Save Changes</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="App.js"></script>
+<script>
+  // ===== HOME PAGE ARTWORK PREVIEW =====
+  document.addEventListener('DOMContentLoaded', () => {
+    const homeGrid = document.getElementById('homeArtworkGrid');
+    if (homeGrid) {
+      homeGrid.innerHTML = artworks.slice(0, 4).map(a => `
+        <div class="artwork-card" onclick="openArtworkModal(${a.id})">
+          <div class="artwork-img">
+            <img src="${a.img}" alt="${a.title}" loading="lazy" />
+            ${a.badge ? `<div class="artwork-badge ${a.status === 'sold' ? 'sold' : ''}">${a.badge}</div>` : ''}
+            ${a.status === 'sold' ? '<div class="artwork-badge sold">Sold</div>' : ''}
+            <div class="artwork-overlay">
+              <div class="artwork-overlay-actions">
+                ${a.status !== 'sold' ? `<button class="btn-overlay" onclick="event.stopPropagation();addToCart(${a.id})">Buy Now</button>` : ''}
+                <button class="btn-overlay-ghost" onclick="event.stopPropagation();openArtworkModal(${a.id})">View</button>
+              </div>
+            </div>
+          </div>
+          <div class="artwork-info">
+            <div class="artwork-category">${a.category}</div>
+            <div class="artwork-title">${a.title}</div>
+            <div class="artwork-artist">by ${a.artist}</div>
+            <div class="artwork-footer">
+              <div class="artwork-price">${formatPrice(a.price)}</div>
+              <div class="artwork-likes">♥ ${a.likes}</div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+    const homeArtists = document.getElementById('homeArtistsGrid');
+    if (homeArtists) {
+      homeArtists.innerHTML = artists.map(a => `
+        <div class="artist-card">
+          <img src="${a.img}" alt="${a.name}" class="artist-card-avatar" />
+          <div class="artist-card-name">${a.name}</div>
+          <div class="artist-card-specialty">${a.specialty}</div>
+          <div class="artist-card-works">${a.works} artworks</div>
+        </div>
+      `).join('');
+    }
+  });
+
+  // ===== NAVIGATION ROUTER =====
+  window.navigateTo = function(pageId) {
+    const pageMap = {
+      'page-home': 'views/home.jsp',
+      'page-gallery': 'views/gallery.jsp',
+      'page-artists': 'views/artists.jsp',
+      'page-about': 'views/about.jsp',
+      'page-contact': 'views/contact.jsp',
+      'page-login': 'views/login.jsp',
+      'page-register': 'views/register.jsp',
+      'page-checkout': 'views/checkout.jsp',
+      'page-artist-dashboard': 'views/adminDashboard.jsp'
+    };
+    if (pageMap[pageId]) {
+      window.location.href = pageMap[pageId];
+    } else {
+      console.warn('Unknown page ID:', pageId);
+    }
+  };
+
+  // ===== DASHBOARD TABS =====
+  function showDashTab(tabId) {
+    document.querySelectorAll('.dashboard-content > div[id^="tab-"]').forEach(t => t.style.display = 'none');
+    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+    document.getElementById(tabId).style.display = 'block';
+    const linkId = 'link-' + tabId.replace('tab-', '');
+    const linkEl = document.getElementById(linkId);
+    if (linkEl) linkEl.classList.add('active');
+
+    // Render artworks in my artworks tab
+    if (tabId === 'tab-artworks') {
+      const grid = document.getElementById('myArtworksGrid');
+      if (grid) {
+        grid.innerHTML = `<div class="artwork-grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))">` +
+          artworks.slice(0, 5).map(a => `
+            <div class="artwork-card">
+              <div class="artwork-img">
+                <img src="${a.img}" alt="${a.title}" />
+                <div class="artwork-badge ${a.status === 'sold' ? 'sold' : ''}">${a.status === 'sold' ? 'Sold' : 'Available'}</div>
+              </div>
+              <div class="artwork-info">
+                <div class="artwork-title">${a.title}</div>
+                <div class="artwork-footer">
+                  <div class="artwork-price">${formatPrice(a.price)}</div>
+                  <div style="display:flex;gap:0.5rem">
+                    <button onclick="showToast('Edit coming soon','info')" style="font-size:0.72rem;color:var(--gold);border:1px solid var(--border);padding:0.25rem 0.6rem;border-radius:3px;cursor:pointer;background:none;font-family:inherit">Edit</button>
+                    <button onclick="showToast('Deleted!','error')" style="font-size:0.72rem;color:var(--red);border:1px solid var(--border);padding:0.25rem 0.6rem;border-radius:3px;cursor:pointer;background:none;font-family:inherit">Del</button>
+                  </div>
+                </div>
+              </div>
+            </div>`).join('') + '</div>';
+      }
+    }
+  }
+
+  // eSewa overlay: populate amount and phone
+  function selectPayment(method) {
+    selectedPayment = method;
+    document.querySelectorAll('.payment-method').forEach(m => m.classList.toggle('selected', m.dataset.method === method));
+    const esewaFields = document.getElementById('esewaFields');
+    const cardFields = document.getElementById('cardFields');
+    const bankFields = document.getElementById('bankFields');
+    if (esewaFields) esewaFields.style.display = method === 'esewa' ? 'block' : 'none';
+    if (cardFields) cardFields.style.display = method === 'card' ? 'block' : 'none';
+    if (bankFields) bankFields.style.display = method === 'bank' ? 'block' : 'none';
+  }
+
+  // Override placeOrder to fill eSewa overlay data
+  const _origPlaceOrder = placeOrder;
+  window.placeOrder = function(e) {
+    e && e.preventDefault();
+    if (cart.length === 0) { showToast('Your cart is empty!', 'error'); return; }
+    const name = document.getElementById('billingName')?.value.trim();
+    const email = document.getElementById('billingEmail')?.value.trim();
+    if (!name || !email) { showToast('Please fill in billing details.', 'error'); return; }
+    if (selectedPayment === 'esewa') {
+      const phone = document.getElementById('esewaPhone')?.value.trim();
+      if (!phone || phone.length < 10) { showToast('Please enter a valid eSewa mobile number.', 'error'); return; }
+      // Populate overlay
+      const total = cart.reduce((s, a) => s + a.price, 0) + 500;
+      const amountEl = document.getElementById('esewaAmount');
+      if (amountEl) amountEl.textContent = formatPrice(total);
+      const phoneEl = document.getElementById('esewaOtpPhone');
+      if (phoneEl) phoneEl.value = phone;
+      showToast('Redirecting to eSewa...', 'info');
+      setTimeout(() => simulateEsewaPayment(), 800);
+    } else if (selectedPayment === 'card') {
+      const cardNum = document.getElementById('cardNumber')?.value.trim();
+      if (!cardNum || cardNum.replace(/ /g,'').length < 16) { showToast('Please enter a valid card number.', 'error'); return; }
+      processPaymentSuccess();
+    } else {
+      processPaymentSuccess();
+    }
+  };
+</script>
+</body>
+</html>
