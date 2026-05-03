@@ -1,85 +1,108 @@
-<%@page contentType="text/html"%>
+```jsp id="4w3rzt"
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>Login</title>
+  <title>Login - Artopia</title>
 
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #74ebd5, #ACB6E5);
-      height: 100vh;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
     }
 
-    .box {
-      width: 320px;
-      background: rgba(255, 255, 255, 0.9);
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      backdrop-filter: blur(5px);
+    body{
+      font-family:Arial, sans-serif;
+      background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
     }
 
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #333;
+    .box{
+      width:320px;
+      background:rgba(255,255,255,0.95);
+      padding:30px;
+      border-radius:14px;
+      box-shadow:0 15px 30px rgba(0,0,0,0.25);
     }
 
-    input {
-      width: 100%;
-      margin: 10px 0;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      outline: none;
-      transition: 0.3s;
+    h2{
+      text-align:center;
+      margin-bottom:15px;
+      color:#222;
     }
 
-    input:focus {
-      border-color: #007bff;
-      box-shadow: 0 0 5px rgba(0,123,255,0.5);
+    .sub{
+      text-align:center;
+      color:#666;
+      font-size:14px;
+      margin-bottom:20px;
     }
 
-    button {
-      width: 100%;
-      padding: 12px;
-      background: linear-gradient(45deg, #007bff, #00c6ff);
-      border: none;
-      color: white;
-      font-size: 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s;
+    input{
+      width:100%;
+      padding:12px;
+      margin:10px 0;
+      border:1px solid #ccc;
+      border-radius:8px;
+      font-size:15px;
+      outline:none;
     }
 
-    button:hover {
-      transform: scale(1.03);
+    input:focus{
+      border-color:#c9a84c;
+      box-shadow:0 0 5px rgba(201,168,76,0.4);
     }
 
-    .error {
-      color: red;
-      text-align: center;
-      font-size: 14px;
+    button{
+      width:100%;
+      padding:13px;
+      border:none;
+      border-radius:8px;
+      background:#c9a84c;
+      color:#111;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+      margin-top:10px;
+      transition:0.3s;
     }
 
-    .auth-link {
-      text-align: center;
-      margin-top: 15px;
-      font-size: 14px;
+    button:hover{
+      background:#b89435;
     }
 
-    .auth-link a {
-      color: #007bff;
-      text-decoration: none;
-      font-weight: bold;
+    .msg-success{
+      color:green;
+      text-align:center;
+      margin-bottom:10px;
+      font-size:14px;
     }
 
-    .auth-link a:hover {
-      text-decoration: underline;
+    .msg-error{
+      color:red;
+      text-align:center;
+      margin-bottom:10px;
+      font-size:14px;
+    }
+
+    .auth-link{
+      text-align:center;
+      margin-top:18px;
+      font-size:14px;
+      color:#555;
+    }
+
+    .auth-link a{
+      color:#007bff;
+      text-decoration:none;
+      font-weight:bold;
+    }
+
+    .auth-link a:hover{
+      text-decoration:underline;
     }
   </style>
 </head>
@@ -89,8 +112,15 @@
 <div class="box">
 
   <h2>Welcome Back</h2>
+  <p class="sub">Login to Artopia Marketplace</p>
 
-  <p class="error">${error}</p>
+  <% if(request.getAttribute("success") != null){ %>
+  <p class="msg-success"><%= request.getAttribute("success") %></p>
+  <% } %>
+
+  <% if(request.getAttribute("error") != null){ %>
+  <p class="msg-error"><%= request.getAttribute("error") %></p>
+  <% } %>
 
   <form action="../user-auth" method="post">
 
@@ -107,10 +137,10 @@
   <p class="auth-link">
     New here?
     <a href="register.jsp">Create an account</a>
-
   </p>
 
 </div>
 
 </body>
 </html>
+```
