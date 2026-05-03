@@ -4,7 +4,7 @@
 <%
     User user = (User) session.getAttribute("user");
 
-    // Safety check (if not logged in)
+
     if (user == null) {
         response.sendRedirect("../views/login.jsp");
         return;
@@ -50,7 +50,7 @@
 
 <main>
 
-    <!-- HERO SECTION (same design, no changes) -->
+
     <section class="hero">
         <div class="hero-bg"></div>
         <div class="hero-grid"></div>
