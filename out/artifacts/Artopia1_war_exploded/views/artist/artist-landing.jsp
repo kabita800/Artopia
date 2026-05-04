@@ -400,68 +400,6 @@
             margin-top: 1.5rem;
         }
 
-        /* ── FOOTER ──────────────────────────────── */
-        footer {
-            background: var(--off-black);
-            border-top: 1px solid var(--border);
-            padding: 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-        }
-
-        .footer-logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--white);
-            text-decoration: none;
-        }
-
-        .footer-logo span { color: var(--accent); }
-
-        .footer-copy {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 0.1em;
-            color: var(--white-muted);
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .footer-links a {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--white-muted);
-            text-decoration: none;
-            transition: color 0.25s;
-        }
-
-        .footer-links a:hover { color: var(--accent); }
-
-        /* ── ANIMATIONS ──────────────────────────── */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        .fade-up {
-            opacity: 0;
-            animation: fadeUp 0.8s ease forwards;
-        }
-
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.25s; }
-        .delay-3 { animation-delay: 0.4s; }
-        .delay-4 { animation-delay: 0.55s; }
 
         /* ── RESPONSIVE ──────────────────────────── */
         @media (max-width: 768px) {
@@ -605,17 +543,9 @@
     <p class="cta-note">No credit card required &nbsp;·&nbsp; Setup in under 5 minutes</p>
 </section>
 
-<!-- FOOTER -->
-<footer>
-    <a class="footer-logo" href="#">Art<span>opia</span></a>
-    <ul class="footer-links">
-        <li><a href="#">Privacy</a></li>
-        <li><a href="#">Terms</a></li>
-        <li><a href="#">Support</a></li>
-        <li><a href="#">Blog</a></li>
-    </ul>
-    <p class="footer-copy">© 2025 Artopia Marketplace. All rights reserved.</p>
-</footer>
 
+
+
+<jsp:include page="../components/footer.jsp" />
 </body>
 </html>
