@@ -1,7 +1,3 @@
-<%-- ================================================================
-   FOOTER COMPONENT - Reusable Footer
-   Include in all pages: <jsp:include page="../components/footer.jsp" />
-   ================================================================ --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
