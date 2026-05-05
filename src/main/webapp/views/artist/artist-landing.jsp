@@ -236,7 +236,7 @@
             margin-bottom: 4rem;
         }
 
-        /* ── FEATURES GRID ───────────────────────── */
+        /* -- FEATURES GRID -- */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
