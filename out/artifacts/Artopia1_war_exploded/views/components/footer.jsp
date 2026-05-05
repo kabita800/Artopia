@@ -1,7 +1,3 @@
-<%-- ================================================================
-   FOOTER COMPONENT - Reusable Footer
-   Include in all pages: <jsp:include page="../components/footer.jsp" />
-   ================================================================ --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -394,7 +390,7 @@
             <!-- For Buyers -->
             <div class="footer-section">
                 <h4>For Buyers</h4>
-                <a href="${pageContext.request.contextPath}/buyer/buyer-landing.jsp">Browse Art</a>
+                <a href="${pageContext.request.contextPath}/views/login.jsp">Browse Art</a>
                 <a href="#">Find Artists</a>
                 <a href="#">How to Buy</a>
                 <a href="#">Payment Options</a>

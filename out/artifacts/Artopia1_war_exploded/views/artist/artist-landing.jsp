@@ -427,8 +427,9 @@
         Sell original artwork, prints, and digital art — zero commission fees.
     </p>
     <div class="hero-buttons fade-up delay-4">
-        <a href="artist-register.jsp" class="btn-primary">Get Started Free</a>
-        <a href="artist-login.jsp" class="btn-outline">Sign In</a>
+        <a href="${pageContext.request.contextPath}/views/register.jsp" class="btn-primary">Get Started Free</a>
+        <a href="${pageContext.request.contextPath}/views/login.jsp" class="btn-outline">Sign In</a>
+        <a href="${pageContext.request.contextPath}/views/login.jsp" class="btn-outline" style="border-color: var(--accent); color: var(--accent);">Buy Art</a>
     </div>
     <div class="hero-scroll">
         <span class="scroll-line"></span>

@@ -285,30 +285,31 @@
 
                 <% if (userRole == null) { %>
                 <!-- Guest Navigation -->
-                <li><a href="${pageContext.request.contextPath}/artist/artist-home.jsp">Home</a></li>
-                <li><a href="${pageContext.request.contextPath}/artist/artist-landing.jsp">Gallery</a></li>
-                <li><a href="${pageContext.request.contextPath}/buyer/buyer-landing.jsp">Artists</a></li>
+                <li><a href="${pageContext.request.contextPath}/index.jsp">Home</a></li>
+                <li><a href="${pageContext.request.contextPath}/views/artist/artist-landing.jsp">Gallery</a></li>
+                <li><a href="${pageContext.request.contextPath}/views/login.jsp">Artist</a></li>
                 <li><a href="${pageContext.request.contextPath}/views/about.jsp">About</a></li>
                 <li><a href="${pageContext.request.contextPath}/views/contact.jsp">Contact</a></li>
-                <% } else if ("artist".equals(userRole)) { %>
+                <% } else if ("artist".equalsIgnoreCase(userRole)) { %>
                 <!-- Artist Navigation -->
-                <li><a href="${pageContext.request.contextPath}/artist/artist-home.jsp">Dashboard</a></li>
-                <li><a href="${pageContext.request.contextPath}/artist/artist-gallery.jsp">My Gallery</a></li>
-                <li><a href="${pageContext.request.contextPath}/artist/artist-profile.jsp">Profile</a></li>
+                <li><a href="${pageContext.request.contextPath}/views/home.jsp">Home</a></li>
+                <li><a href="${pageContext.request.contextPath}/views/artist/artist-gallery.jsp">Gallery</a></li>
+                <li><a href="${pageContext.request.contextPath}/views/artist/artist-profile.jsp">Artist</a></li>
                 <li><a href="${pageContext.request.contextPath}/views/about.jsp">About</a></li>
                 <li><a href="${pageContext.request.contextPath}/views/contact.jsp">Contact</a></li>
-                <% } else if ("buyer".equals(userRole)) { %>
+                <% } else if ("buyer".equalsIgnoreCase(userRole)) { %>
                 <!-- Buyer Navigation -->
-                <li><a href="${pageContext.request.contextPath}/buyer/buyer-home.jsp">Home</a></li>
-                <li><a href="${pageContext.request.contextPath}/buyer/buyer-gallery.jsp">Gallery</a></li>
-                <li><a href="${pageContext.request.contextPath}/buyer/artists.jsp">Artists</a></li>
+                <li><a href="${pageContext.request.contextPath}/index.jsp">Home</a></li>
+                <li><a href="${pageContext.request.contextPath}/views/artist/artist-landing.jsp">Gallery</a></li>
+                <li><a href="${pageContext.request.contextPath}/views/login.jsp">Artist</a></li>
                 <li><a href="${pageContext.request.contextPath}/views/about.jsp">About</a></li>
                 <li><a href="${pageContext.request.contextPath}/views/contact.jsp">Contact</a></li>
-                <% } else if ("admin".equals(userRole)) { %>
+                <% } else if ("admin".equalsIgnoreCase(userRole)) { %>
                 <!-- Admin Navigation -->
-                <li><a href="${pageContext.request.contextPath}/admin/admin-dashboard.jsp">Dashboard</a></li>
-                <li><a href="${pageContext.request.contextPath}/admin/admin-dashboard.jsp#arts">Manage Arts</a></li>
-                <li><a href="${pageContext.request.contextPath}/admin/admin-dashboard.jsp#users">Manage Users</a></li>
+                <li><a href="${pageContext.request.contextPath}/views/adminDashboard.jsp">Dashboard</a></li>
+                <li><a href="${pageContext.request.contextPath}/index.jsp">Home</a></li>
+                <li><a href="${pageContext.request.contextPath}/views/login.jsp">Artist</a></li>
+                <li><a href="${pageContext.request.contextPath}/views/artist/artist-landing.jsp">Gallery</a></li>
                 <% } %>
             </ul>
 
@@ -327,8 +328,8 @@
                     <a href="${pageContext.request.contextPath}/logout" class="btn btn-small btn-outline">Logout</a>
                 </div>
                 <% } else { %>
-                <a href="${pageContext.request.contextPath}/artist/artist-login.jsp" class="btn btn-small btn-outline">Login</a>
-                <a href="${pageContext.request.contextPath}/buyer/buyer-register.jsp" class="btn btn-small btn-primary">Join Artopia</a>
+                <a href="${pageContext.request.contextPath}/views/login.jsp" class="btn btn-small btn-outline">Login</a>
+                <a href="${pageContext.request.contextPath}/views/register.jsp" class="btn btn-small btn-primary">Join Artopia</a>
                 <% } %>
             </div>
         </div>
