@@ -440,9 +440,9 @@
                     <p>Today, Artopia hosts thousands of talented artists from around the world, collectively serving millions of art enthusiasts.</p>
                 </div>
 
-                <!-- IMAGE SIDE (FIXED) -->
+
                 <div class="story-image-box">
-                    <img src="${pageContext.request.contextPath}/views/images/group.webp" alt="Art Image">
+                    <img src="<%= request.getContextPath() %>/views/images/group.webp" alt="Art Image">
                 </div>
 
             </div>

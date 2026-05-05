@@ -442,7 +442,7 @@
 
 
                 <div class="story-image-box">
-                    <img src="${pageContext.request.contextPath}/views/images/group.webp" alt="Art Image">
+                    <img src="<%= request.getContextPath() %>/views/images/group.webp" alt="Art Image">
                 </div>
 
             </div>
