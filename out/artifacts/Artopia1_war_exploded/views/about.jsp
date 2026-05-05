@@ -233,7 +233,7 @@
         /* Story text spacing fix */
         .story-text h2 {
             margin-bottom: var(--spacing-md);
-            color: var(--accent-color);
+
         }
 
         /* Optional paragraph tuning for consistency */
@@ -427,18 +427,24 @@
     <section>
         <div class="container">
             <div class="grid grid-2" style="align-items: center; gap: var(--spacing-xl);">
+
+                <!-- TEXT SIDE -->
                 <div class="story-text">
                     <div class="section-label">Who We Are</div>
                     <h2>Our Story</h2>
+
                     <p>Artopia was founded in 2020 with a simple mission: to create a platform where artists can thrive and art lovers can discover unique, authentic creations directly from creators.</p>
+
                     <p>We believe that every artist deserves a fair platform to showcase and monetize their work without unnecessary intermediaries or high commission fees.</p>
+
                     <p>Today, Artopia hosts thousands of talented artists from around the world, collectively serving millions of art enthusiasts.</p>
                 </div>
+
+                <!-- IMAGE SIDE (FIXED) -->
                 <div class="story-image-box">
-                    <div class="story-image-box">
-                        <img src="${pageContext.request.contextPath}/views/images/group.webp" alt="Art Image">
-                    </div>
+                    <img src="${pageContext.request.contextPath}/views/images/group.webp" alt="Art Image">
                 </div>
+
             </div>
         </div>
     </section>
