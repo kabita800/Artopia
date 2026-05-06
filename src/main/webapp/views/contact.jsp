@@ -107,7 +107,7 @@
             .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
         }
 
-        /* ── Section headings ── */
+        /* Section headings */
         .section-heading {
             font-family: var(--font-display);
             font-size: 2rem;
@@ -116,7 +116,7 @@
             margin-bottom: 2rem;
         }
 
-        /* ── Alert ── */
+        /* Alert */
         .alert-success {
             background: rgba(245,197,24,.1);
             border: 1px solid rgba(245,197,24,.4);
