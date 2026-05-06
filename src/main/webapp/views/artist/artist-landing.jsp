@@ -401,7 +401,7 @@
         }
 
 
-        /* ── RESPONSIVE ──────────────────────────── */
+        /* RESPONSIVE */
         @media (max-width: 768px) {
             nav { padding: 1rem 1.5rem; }
             .nav-links { display: none; }
