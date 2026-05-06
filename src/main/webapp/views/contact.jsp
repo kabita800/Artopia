@@ -42,11 +42,11 @@
         a { color: var(--accent); text-decoration: none; transition: opacity .2s; }
         a:hover { opacity: .75; }
 
-        /* ── Container ── */
+        /* Container */
         .container    { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
         .container-sm { max-width: 800px;  margin: 0 auto; padding: 0 2rem; }
 
-        /* ── Hero ── */
+        /* Hero */
         .hero {
             position: relative;
             padding: 6rem 2rem 5rem;
