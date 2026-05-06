@@ -329,7 +329,7 @@
             line-height: 1.7;
         }
 
-        /* ── Noise texture overlay (subtle grain) ── */
+        /* Noise texture overlay */
         body::before {
             content: '';
             position: fixed;
@@ -340,7 +340,7 @@
             z-index: 9999;
         }
 
-        /* ── Fade-in animation ── */
+        /* Fade-in animation */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(24px); }
             to   { opacity: 1; transform: translateY(0); }
@@ -357,7 +357,7 @@
 
 <main>
 
-    <!-- ── Hero ── -->
+    <!--  Hero -->
     <section class="hero">
         <div class="container">
             <h1>Get In Touch</h1>
