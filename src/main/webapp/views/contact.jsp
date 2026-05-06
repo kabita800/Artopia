@@ -216,7 +216,7 @@
         .btn-submit:active { transform: translateY(0); }
         .btn-submit svg { width: 18px; height: 18px; }
 
-        /* ── Info Panel ── */
+        /* Info Panel */
         .info-block {
             margin-bottom: 2rem;
         }
@@ -269,7 +269,7 @@
             opacity: 1;
         }
 
-        /* ── FAQ Section ── */
+        /* FAQ Section */
         .faq-section {
             background: var(--black-soft);
             border-top: 1px solid var(--border);
