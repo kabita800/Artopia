@@ -1,5 +1,5 @@
 <%--
-   ABOUT PAGE - Information about Artopia marketplace
+   ABOUT PAGE
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -11,9 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
     <style>
-        /* ============================================================
-           CSS VARIABLES & RESET
-        ============================================================ */
+
         :root {
             --bg-black:        #0a0a0a;
             --bg-card:         #111111;
@@ -69,9 +67,7 @@
             opacity: 0.4;
         }
 
-        /* ============================================================
-           TYPOGRAPHY
-        ============================================================ */
+        /* TYPOGRAPHY  */
         h1, h2, h3 {
             font-family: var(--font-display);
             line-height: 1.2;
