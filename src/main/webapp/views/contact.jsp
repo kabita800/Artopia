@@ -525,7 +525,7 @@
 
 </main>
 
-<!-- Footer -->
+
 <jsp:include page="components/footer.jsp" />
 
 <script src="${pageContext.request.contextPath}/views/js/script.js"></script>
