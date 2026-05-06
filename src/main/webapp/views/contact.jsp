@@ -128,7 +128,7 @@
             font-size: .95rem;
         }
 
-        /* ── Form ── */
+        /* Form */
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -191,7 +191,7 @@
         /* placeholder */
         ::placeholder { color: #444; }
 
-        /* ── Button ── */
+        /* Button */
         .btn-submit {
             display: inline-flex;
             align-items: center;
