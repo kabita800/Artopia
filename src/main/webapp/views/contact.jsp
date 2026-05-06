@@ -88,7 +88,7 @@
             margin: 0 auto;
         }
 
-        /* ── Divider line ── */
+        /* Divider line */
         .divider {
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--border-glow), transparent);
@@ -96,7 +96,7 @@
             margin: 0 2rem;
         }
 
-        /* ── Main grid ── */
+        /* Main grid */
         .contact-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
