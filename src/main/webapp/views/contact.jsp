@@ -367,7 +367,7 @@
 
     <div class="divider"></div>
 
-    <!-- ── Contact Content ── -->
+    <!-- Contact Content -->
     <section>
         <div class="container">
             <div class="contact-grid">
@@ -488,7 +488,7 @@
         </div>
     </section>
 
-    <!-- ── FAQ ── -->
+    <!-- FAQ -->
     <section class="faq-section">
         <div class="container-sm">
             <h2>Frequently Asked Questions</h2>
