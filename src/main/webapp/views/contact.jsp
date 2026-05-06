@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/views/css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
     <style>
-        /* ── Reset & Base ── */
+        /* Reset & Base */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
@@ -20,7 +20,7 @@
             --black-card:  #161616;
             --border:      #2a2a2a;
             --border-glow: #f5c518;
-            --accent:      #f5c518;      /* yellow */
+            --accent:      #f5c518;
             --accent-dim:  #c9a012;
             --white:       #f0f0f0;
             --muted:       #888888;
