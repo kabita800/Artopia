@@ -8,8 +8,30 @@ import jakarta.servlet.http.*;
 
 import java.io.IOException;
 
-@WebServlet("/user-auth")
+@WebServlet({"/user-auth", "/logout"})
 public class UserServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String action = request.getParameter("action");
+        if ("/logout".equals(request.getServletPath())) {
+            action = "logout";
+        }
+        
+        if ("logout".equalsIgnoreCase(action)) {
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                session.invalidate();
+            }
+            Cookie cookie = new Cookie("userEmail", "");
+            cookie.setMaxAge(0);
+            response.addCookie(cookie);
+            response.sendRedirect(request.getContextPath() + "/views/public/login.jsp");
+        } else {
+            response.sendRedirect(request.getContextPath() + "/views/public/login.jsp");
+        }
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -35,9 +57,9 @@ public class UserServlet extends HttpServlet {
             boolean success = userDAO.registeruser(user);
 
             if (success) {
-                response.sendRedirect("views/login.jsp");
+                response.sendRedirect(request.getContextPath() + "/views/public/login.jsp");
             } else {
-                response.sendRedirect("views/register.jsp?error=failed");
+                response.sendRedirect(request.getContextPath() + "/views/public/register.jsp?error=failed");
             }
         }
 
@@ -54,6 +76,8 @@ public class UserServlet extends HttpServlet {
                 // CREATE SESSION
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
+                session.setAttribute("userRole", user.getRole() != null ? user.getRole().toLowerCase() : "");
+                session.setAttribute("userName", user.getName());
                 session.setMaxInactiveInterval(30 * 60); // 30 min
 
                 // OPTIONAL COOKIE
@@ -62,15 +86,28 @@ public class UserServlet extends HttpServlet {
                 response.addCookie(cookie);
 
                 // Send users to app root (index forwards to artist dashboard)
-                response.sendRedirect(request.getContextPath() + "/");
+                String role = user.getRole() != null ? user.getRole().toLowerCase() : "";
+
+                if ("artist".equals(role)) {
+                    response.sendRedirect(request.getContextPath() + "/views/shared/home.jsp");
+                }
+                else if ("buyer".equals(role)) {
+                    response.sendRedirect(request.getContextPath() + "/views/shared/home.jsp");
+                }
+                else if ("admin".equals(role)) {
+                    response.sendRedirect(request.getContextPath() + "/views/admin/admin_dashboard.jsp");
+                }
+                else {
+                    response.sendRedirect(request.getContextPath() + "/views/public/landing.jsp");
+                }
 
             } else {
-                response.sendRedirect("views/login.jsp?error=invalid");
+                response.sendRedirect(request.getContextPath() + "/views/public/login.jsp?error=invalid");
             }
         }
 
         /* ================= LOGOUT ================= */
-        else if ("logout".equalsIgnoreCase(action)) {
+        else if ("logout".equalsIgnoreCase(action) || "/logout".equals(request.getServletPath())) {
 
             HttpSession session = request.getSession(false);
 
@@ -82,12 +119,12 @@ public class UserServlet extends HttpServlet {
             cookie.setMaxAge(0);
             response.addCookie(cookie);
 
-            response.sendRedirect("views/login.jsp");
+            response.sendRedirect(request.getContextPath() + "/views/public/login.jsp");
         }
 
         /* ================= DEFAULT ================= */
         else {
-            response.sendRedirect("views/login.jsp");
+            response.sendRedirect(request.getContextPath() + "/views/public/login.jsp");
         }
     }
 }

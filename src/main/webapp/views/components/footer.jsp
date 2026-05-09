@@ -372,8 +372,8 @@
             <div class="footer-section">
                 <h4>Quick Links</h4>
                 <a href="${pageContext.request.contextPath}/">Home</a>
-                <a href="${pageContext.request.contextPath}/views/about.jsp">About Us</a>
-                <a href="${pageContext.request.contextPath}/views/contact.jsp">Contact</a>
+                <a href="${pageContext.request.contextPath}/views/shared/about.jsp">About Us</a>
+                <a href="${pageContext.request.contextPath}/views/shared/contact.jsp">Contact</a>
                 <a href="#">Privacy Policy</a>
                 <a href="#">Terms of Service</a>
             </div>
@@ -390,7 +390,7 @@
             <!-- For Buyers -->
             <div class="footer-section">
                 <h4>For Buyers</h4>
-                <a href="${pageContext.request.contextPath}/views/login.jsp">Browse Art</a>
+                <a href="${pageContext.request.contextPath}/views/images/login.jsp">Browse Art</a>
                 <a href="#">Find Artists</a>
                 <a href="#">How to Buy</a>
                 <a href="#">Payment Options</a>

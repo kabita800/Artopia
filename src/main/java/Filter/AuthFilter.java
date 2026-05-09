@@ -44,25 +44,37 @@ public class AuthFilter implements Filter {
 
     private boolean isPublicPath(String path) {
         return "/".equals(path)
-                || "/index.jsp".equals(path)
-                || "/views/dashboard.jsp".equals(path)
-            || "/views/artist/artist-home.jsp".equals(path)
-                || "/views/login.jsp".equals(path)
-                || "/views/register.jsp".equals(path)
-                || "/views/about.jsp".equals(path)
-                || "/views/contact.jsp".equals(path)
-                || "/views/artist/artist-landing.jsp".equals(path)
-                || "/views/artist/artist-login.jsp".equals(path)
-                || "/views/artist/artist-register.jsp".equals(path)
+                || "/views/index.jsp".equals(path)
+
+                // Public pages
+                || "/views/public/landing.jsp".equals(path)
+                || "/views/public/login.jsp".equals(path)
+                || "/views/public/register.jsp".equals(path)
+
+                // Shared pages
+                || "/views/shared/home.jsp".equals(path)
+                || "/views/shared/artist.jsp".equals(path)
+                || "/views/shared/about.jsp".equals(path)
+                || "/views/shared/contact.jsp".equals(path)
+
+                // Public gallery access
+                || "/views/artist/gallery.jsp".equals(path)
+                || "/views/buyer/gallery.jsp".equals(path)
+
+                // Auth servlet
                 || "/user-auth".equals(path)
-                || path.startsWith("/views/css/")
-                || path.startsWith("/views/js/")
+
+                // Static resources
+                || path.startsWith("/css/")
+                || path.startsWith("/js/")
+                || path.startsWith("/images/")
                 || path.endsWith(".css")
                 || path.endsWith(".js")
                 || path.endsWith(".png")
                 || path.endsWith(".jpg")
                 || path.endsWith(".jpeg")
                 || path.endsWith(".gif")
-                || path.endsWith(".svg");
+                || path.endsWith(".svg")
+                || path.endsWith(".webp");
     }
 }
