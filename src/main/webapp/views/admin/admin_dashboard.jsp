@@ -91,9 +91,7 @@
             color:var(--muted);
         }
 
-        /* =====================================================
-           DASHBOARD GRID
-        ===================================================== */
+        /* DASHBOARD GRID */
 
         .dashboard-grid{
             display:grid;
