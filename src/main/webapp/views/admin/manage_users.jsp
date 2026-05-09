@@ -214,9 +214,7 @@
             color:var(--danger);
         }
 
-        /* =====================================================
-           ACTION BUTTONS
-        ===================================================== */
+        /* ACTION BUTTONS */
 
         .action-buttons{
             display:flex;
