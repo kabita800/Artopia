@@ -42,9 +42,7 @@
             font-family:'Inter',sans-serif;
         }
 
-        /* =====================================================
-           MAIN CONTENT
-        ===================================================== */
+        /* MAIN CONTENT */
 
         .main-content{
             margin-left:260px;
@@ -83,9 +81,7 @@
             transform:translateY(-2px);
         }
 
-        /* =====================================================
-           TABLE CARD
-        ===================================================== */
+        /* TABLE CARD */
 
         .table-card{
             background:var(--card);
