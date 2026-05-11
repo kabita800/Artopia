@@ -246,9 +246,7 @@
             transform:translateY(-2px);
         }
 
-        /* =====================================================
-           RESPONSIVE
-        ===================================================== */
+        /* RESPONSIVE */
 
         @media(max-width:900px){
 
@@ -291,9 +289,7 @@
 <!-- SIDEBAR -->
 <jsp:include page="/views/components/sideBar.jsp" />
 
-<!-- =====================================================
-     MAIN CONTENT
-===================================================== -->
+<!-- MAIN CONTENT -->
 
 <div class="main-content">
 
