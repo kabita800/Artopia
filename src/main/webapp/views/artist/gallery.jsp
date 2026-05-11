@@ -34,9 +34,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
 
-        /* ══════════════════════════════════════════════════════════
-           TOKENS
-        ══════════════════════════════════════════════════════════ */
+
+
+
         :root {
             --bg:          #080808;
             --surface:     #0f0f0f;
@@ -55,9 +55,7 @@
             --ease:        cubic-bezier(.4,0,.2,1);
         }
 
-        /* ══════════════════════════════════════════════════════════
-           RESET
-        ══════════════════════════════════════════════════════════ */
+
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
         html{scroll-behavior:smooth}
         body{
@@ -69,7 +67,6 @@
             min-height:100vh;
             overflow-x:hidden;
         }
-        /* grain texture */
         body::before{
             content:'';
             position:fixed;inset:0;
@@ -81,9 +78,7 @@
         img{display:block}
         button{font-family:'DM Mono',monospace;cursor:pointer}
 
-        /* ══════════════════════════════════════════════════════════
-           LAYOUT WRAPPER
-        ══════════════════════════════════════════════════════════ */
+
         .wrap{
             max-width:1340px;
             margin:0 auto;
