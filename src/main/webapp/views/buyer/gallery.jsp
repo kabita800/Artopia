@@ -875,9 +875,7 @@
     </div>
 </div>
 
-<%-- ════════════════════════════════════════════════════
-     CART TOAST
-════════════════════════════════════════════════════ --%>
+<%-- CART TOAST --%>
 <div class="toast" id="toast">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
         <polyline points="20 6 9 17 4 12"/>
@@ -888,15 +886,11 @@
 <jsp:include page="../components/footer.jsp" />
 
 <script>
-    /* ══════════════════════════════════════════════════
-       STATE
-    ══════════════════════════════════════════════════ */
+    /* STATE */
     var cart = JSON.parse(localStorage.getItem('artopia_cart') || '[]');
     var activeDetail = null; // { id, title, price }
 
-    /* ══════════════════════════════════════════════════
-       INIT
-    ══════════════════════════════════════════════════ */
+    /*  INIT */
     (function init() {
         updateCartUI();
         updateCount();
@@ -906,23 +900,17 @@
         });
     })();
 
-    /* ══════════════════════════════════════════════════
-       SEARCH  (live, client-side)
-    ══════════════════════════════════════════════════ */
+    /* SEARCH  (live, client-side) */
     document.getElementById('searchInput').addEventListener('input', function() {
         applyFilters();
     });
 
-    /* ══════════════════════════════════════════════════
-       SORT
-    ══════════════════════════════════════════════════ */
+    /* SORT */
     document.getElementById('sortSelect').addEventListener('change', function() {
         applyFilters();
     });
 
-    /* ══════════════════════════════════════════════════
-       FILTER SIDEBAR TOGGLE (mobile)
-    ══════════════════════════════════════════════════ */
+    /* FILTER SIDEBAR TOGGLE (mobile)*/
     function toggleSidebar() {
         var sb = document.getElementById('sidebar');
         var bd = document.getElementById('sidebarBackdrop');
