@@ -84,9 +84,7 @@
         .text-center { text-align: center; }
         .text-muted   { color: var(--text-muted); }
 
-        /* ============================================================
-           LAYOUT
-        ============================================================ */
+        /* LAYOUT */
         .container {
             max-width: 1200px;
             margin: 0 auto;
