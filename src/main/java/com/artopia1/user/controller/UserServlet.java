@@ -27,7 +27,7 @@ public class UserServlet extends HttpServlet {
             Cookie cookie = new Cookie("userEmail", "");
             cookie.setMaxAge(0);
             response.addCookie(cookie);
-            response.sendRedirect(request.getContextPath() + "/views/public/login.jsp");
+            response.sendRedirect(request.getContextPath() + "/views/public/login.jsp?logout=1");
         } else {
             response.sendRedirect(request.getContextPath() + "/views/public/login.jsp");
         }
@@ -51,14 +51,20 @@ public class UserServlet extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String role = request.getParameter("role");
+            if (role != null) {
+                role = role.trim().toLowerCase();
+            }
 
             User user = new User(name, email, password, role);
 
             boolean success = userDAO.registeruser(user);
+            HttpSession sess = request.getSession();
 
             if (success) {
+                sess.setAttribute("flashSuccess", "Account created successfully. You can sign in now.");
                 response.sendRedirect(request.getContextPath() + "/views/public/login.jsp");
             } else {
+                sess.setAttribute("flashError", "Could not register. Try a different email or check your database connection.");
                 response.sendRedirect(request.getContextPath() + "/views/public/register.jsp?error=failed");
             }
         }
@@ -79,6 +85,11 @@ public class UserServlet extends HttpServlet {
                 session.setAttribute("userRole", user.getRole() != null ? user.getRole().toLowerCase() : "");
                 session.setAttribute("userName", user.getName());
                 session.setMaxInactiveInterval(30 * 60); // 30 min
+
+                String welcome = user.getName() != null && !user.getName().isBlank()
+                        ? "Welcome back, " + user.getName() + ". You're signed in."
+                        : "Signed in successfully.";
+                session.setAttribute("flashSuccess", welcome);
 
                 // OPTIONAL COOKIE
                 Cookie cookie = new Cookie("userEmail", user.getEmail());
@@ -102,6 +113,8 @@ public class UserServlet extends HttpServlet {
                 }
 
             } else {
+                HttpSession sess = request.getSession();
+                sess.setAttribute("flashError", "Invalid email or password. Please try again.");
                 response.sendRedirect(request.getContextPath() + "/views/public/login.jsp?error=invalid");
             }
         }
@@ -119,7 +132,7 @@ public class UserServlet extends HttpServlet {
             cookie.setMaxAge(0);
             response.addCookie(cookie);
 
-            response.sendRedirect(request.getContextPath() + "/views/public/login.jsp");
+            response.sendRedirect(request.getContextPath() + "/views/public/login.jsp?logout=1");
         }
 
         /* ================= DEFAULT ================= */

@@ -5,6 +5,7 @@
 <%
     String userName = (String) session.getAttribute("userName");
     boolean isLoggedIn = (userName != null && !userName.trim().isEmpty());
+    String ctx = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -389,8 +390,8 @@
                         Explore thousands of one-of-a-kind artworks from independent artists around the world. Buy, collect, and connect.
                     </p>
                     <div class="hero-actions fu d4">
-                        <a href="gallery.jsp" class="btn btn-primary">Explore Gallery</a>
-                        <a href="artists.jsp" class="btn btn-outline">Meet the Artists</a>
+                        <a href="<%= ctx %>/buyer/gallery" class="btn btn-primary">Explore Gallery</a>
+                        <a href="<%= ctx %>/views/shared/artist.jsp" class="btn btn-outline">Meet the Artists</a>
                     </div>
                     <div class="hero-stats fu d5">
                         <div>
@@ -430,7 +431,7 @@
                     <h2>Featured <span>Product</span></h2>
                     <p>Hand-picked by our curators this week</p>
                 </div>
-                <a href="gallery.jsp" class="link-more">View All →</a>
+                <a href="<%= ctx %>/buyer/gallery" class="link-more">View All →</a>
             </div>
             <div class="featured-card fu d1">
                 <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=900&q=80"
@@ -442,7 +443,7 @@
                     <p>Acrylic on canvas — a luminous landscape capturing the fleeting moment when golden light pours over the earth at dusk.</p>
                     <div class="price">$320.00</div>
                     <div class="card-actions">
-                        <a href="gallery.jsp" class="btn btn-primary">View Details</a>
+                        <a href="<%= ctx %>/buyer/gallery" class="btn btn-primary">View Details</a>
                         <a href="#" class="btn btn-outline">Add to Cart</a>
                     </div>
                 </div>
@@ -460,22 +461,22 @@
                 </div>
             </div>
             <div class="grid-4">
-                <a href="gallery.jsp?cat=painting" class="cat-card fu d1">
+                <a href="<%= ctx %>/buyer/gallery?cat=painting" class="cat-card fu d1">
                     <div class="cat-icon">🎨</div>
                     <span class="cat-name">Painting</span>
                     <span class="cat-count">840 works</span>
                 </a>
-                <a href="gallery.jsp?cat=photography" class="cat-card fu d2">
+                <a href="<%= ctx %>/buyer/gallery?cat=photography" class="cat-card fu d2">
                     <div class="cat-icon">📷</div>
                     <span class="cat-name">Photography</span>
                     <span class="cat-count">520 works</span>
                 </a>
-                <a href="gallery.jsp?cat=sculpture" class="cat-card fu d3">
+                <a href="<%= ctx %>/buyer/gallery?cat=sculpture" class="cat-card fu d3">
                     <div class="cat-icon">🗿</div>
                     <span class="cat-name">Sculpture</span>
                     <span class="cat-count">310 works</span>
                 </a>
-                <a href="gallery.jsp?cat=digital" class="cat-card fu d4">
+                <a href="<%= ctx %>/buyer/gallery?cat=digital" class="cat-card fu d4">
                     <div class="cat-icon">💻</div>
                     <span class="cat-name">Digital Art</span>
                     <span class="cat-count">730 works</span>
@@ -492,7 +493,7 @@
                     <h2>New <span>Arrivals</span></h2>
                     <p>Fresh works added by our artists</p>
                 </div>
-                <a href="gallery.jsp" class="link-more">Browse All →</a>
+                <a href="<%= ctx %>/buyer/gallery" class="link-more">Browse All →</a>
             </div>
             <div class="grid-3">
 
@@ -563,8 +564,8 @@
                     <p>Join Artopia and start selling your original work to thousands of collectors worldwide. Free to get started.</p>
                 </div>
                 <div class="cta-actions">
-                    <a href="register.jsp?role=artist" class="btn btn-primary">Join as Artist</a>
-                    <a href="about.jsp" class="btn btn-outline">Learn More</a>
+                    <a href="<%= ctx %>/views/public/register.jsp?role=artist" class="btn btn-primary">Join as Artist</a>
+                    <a href="<%= ctx %>/views/shared/about.jsp" class="btn btn-outline">Learn More</a>
                 </div>
             </div>
         </div>

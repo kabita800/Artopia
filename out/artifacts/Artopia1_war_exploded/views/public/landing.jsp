@@ -428,8 +428,8 @@
   </p>
   <div class="hero-buttons fade-up delay-4">
     <a href="${pageContext.request.contextPath}/views/public/register.jsp" class="btn-primary">Get Started Free</a>
-    <a href="${pageContext.request.contextPath}/views/images/login.jsp" class="btn-outline">Sign In</a>
-    <a href="${pageContext.request.contextPath}/views/images/login.jsp" class="btn-outline" style="border-color: var(--accent); color: var(--accent);">Buy Art</a>
+    <a href="${pageContext.request.contextPath}/views/public/login.jsp" class="btn-outline">Sign In</a>
+    <a href="${pageContext.request.contextPath}/views/public/login.jsp" class="btn-outline" style="border-color: var(--accent); color: var(--accent);">Buy Art</a>
   </div>
   <div class="hero-scroll">
     <span class="scroll-line"></span>

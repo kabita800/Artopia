@@ -122,14 +122,6 @@
     <h2>Create Account</h2>
     <p class="sub">Join Artopia Marketplace</p>
 
-    <% if(request.getAttribute("success") != null){ %>
-    <p class="msg-success"><%= request.getAttribute("success") %></p>
-    <% } %>
-
-    <% if(request.getAttribute("error") != null){ %>
-    <p class="msg-error"><%= request.getAttribute("error") %></p>
-    <% } %>
-
     <form action="${pageContext.request.contextPath}/user-auth" method="post">
 
         <input type="hidden" name="action" value="register">
@@ -163,6 +155,8 @@
     </p>
 
 </div>
+
+<jsp:include page="/views/components/artopia_toast.jsp" />
 
 </body>
 </html>

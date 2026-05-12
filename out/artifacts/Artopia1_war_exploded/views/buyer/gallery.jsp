@@ -675,14 +675,6 @@
     </div>
 </header>
 
-<%-- Flash --%>
-<% if (successMsg != null && !successMsg.isEmpty()) { %>
-<div class="flash flash-ok"><%= successMsg %></div>
-<% } %>
-<% if (errorMsg != null && !errorMsg.isEmpty()) { %>
-<div class="flash flash-err"><%= errorMsg %></div>
-<% } %>
-
 <%-- ════════════════════════════════════════════════════
      SIDEBAR BACKDROP (mobile)
 ════════════════════════════════════════════════════ --%>

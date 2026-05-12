@@ -376,12 +376,6 @@
                 <div>
                     <h2 class="section-heading">Send Us a Message</h2>
 
-                    <% if (request.getParameter("success") != null) { %>
-                    <div class="alert-success">
-                        ✓ Thank you! Your message has been sent. We'll get back to you soon.
-                    </div>
-                    <% } %>
-
                     <form method="POST" action="${pageContext.request.contextPath}/contact-handler">
 
                         <div class="form-row">

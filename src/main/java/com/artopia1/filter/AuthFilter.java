@@ -1,4 +1,4 @@
-package com.artopia1.user.filter;
+package com.artopia1.filter;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -28,15 +28,21 @@ public class AuthFilter implements Filter {
         boolean loggedIn = (session != null && session.getAttribute("user") != null);
 
         if (isPublicPath(path)) {
-
             chain.doFilter(req, res);
             return;
         }
 
-        // If not logged in → redirect to login
         if (!loggedIn) {
-            response.sendRedirect(request.getContextPath() + "/views/login.jsp");
+            response.sendRedirect(request.getContextPath() + "/views/public/login.jsp");
             return;
+        }
+
+        if (path.startsWith("/views/admin/")) {
+            String role = session != null ? (String) session.getAttribute("userRole") : "";
+            if (!"admin".equalsIgnoreCase(role)) {
+                response.sendRedirect(request.getContextPath() + "/views/shared/home.jsp");
+                return;
+            }
         }
 
         chain.doFilter(req, res);
@@ -44,30 +50,32 @@ public class AuthFilter implements Filter {
 
     private boolean isPublicPath(String path) {
         return "/".equals(path)
-                || "/views/index.jsp".equals(path)
+                || "/index.jsp".equals(path)
 
-                // Public pages
                 || "/views/public/landing.jsp".equals(path)
                 || "/views/public/login.jsp".equals(path)
                 || "/views/public/register.jsp".equals(path)
 
-                // Shared pages
                 || "/views/shared/home.jsp".equals(path)
                 || "/views/shared/artist.jsp".equals(path)
                 || "/views/shared/about.jsp".equals(path)
                 || "/views/shared/contact.jsp".equals(path)
 
-                // Public gallery access
                 || "/views/artist/gallery.jsp".equals(path)
                 || "/views/buyer/gallery.jsp".equals(path)
 
-                // Auth servlet
                 || "/user-auth".equals(path)
+                || "/logout".equals(path)
+                || "/contact-handler".equals(path)
+                || "/home".equals(path)
+                || "/buyer/gallery".equals(path)
+                || "/artist/gallery".equals(path)
 
-                // Static resources
                 || path.startsWith("/css/")
                 || path.startsWith("/js/")
                 || path.startsWith("/images/")
+                || path.startsWith("/views/css/")
+                || path.startsWith("/views/images/")
                 || path.endsWith(".css")
                 || path.endsWith(".js")
                 || path.endsWith(".png")

@@ -118,11 +118,11 @@
                 Manage Arts
             </a>
 
-            <a href="../buyer/gallery.jsp">
+            <a href="${pageContext.request.contextPath}/buyer/gallery">
                 Gallery
             </a>
 
-            <a href="${pageContext.request.contextPath}/logout">
+            <a href="${pageContext.request.contextPath}/logout" class="artopia-logout-btn">
                 Logout
             </a>
 
@@ -136,3 +136,4 @@
     </div>
 
 </div>
+<jsp:include page="/views/components/artopia_toast.jsp" />

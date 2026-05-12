@@ -217,8 +217,8 @@
                 </li>
 
                 <li>
-                    <a href="${pageContext.request.contextPath}/views/buyer/gallery.jsp"
-                       class="<%= currentURI.contains("gallery.jsp") ? "active" : "" %>">
+                    <a href="${pageContext.request.contextPath}/buyer/gallery"
+                       class="<%= currentURI.contains("/buyer/gallery") || currentURI.contains("gallery.jsp") ? "active" : "" %>">
                         Gallery
                     </a>
                 </li>
@@ -254,8 +254,8 @@
                 </li>
 
                 <li>
-                    <a href="${pageContext.request.contextPath}/views/artist/gallery.jsp"
-                       class="<%= currentURI.contains("gallery.jsp") ? "active" : "" %>">
+                    <a href="${pageContext.request.contextPath}/artist/gallery"
+                       class="<%= currentURI.contains("/artist/gallery") || currentURI.contains("gallery.jsp") ? "active" : "" %>">
                         Gallery
                     </a>
                 </li>
@@ -291,8 +291,8 @@
                 </li>
 
                 <li>
-                    <a href="${pageContext.request.contextPath}/views/buyer/gallery.jsp"
-                       class="<%= currentURI.contains("gallery.jsp") ? "active" : "" %>">
+                    <a href="${pageContext.request.contextPath}/buyer/gallery"
+                       class="<%= currentURI.contains("/buyer/gallery") || currentURI.contains("gallery.jsp") ? "active" : "" %>">
                         Gallery
                     </a>
                 </li>
@@ -335,8 +335,8 @@
                 </li>
 
                 <li>
-                    <a href="${pageContext.request.contextPath}/views/artist/gallery.jsp"
-                       class="<%= currentURI.contains("gallery.jsp") ? "active" : "" %>">
+                    <a href="${pageContext.request.contextPath}/artist/gallery"
+                       class="<%= currentURI.contains("/artist/gallery") || currentURI.contains("gallery.jsp") ? "active" : "" %>">
                         Gallery
                     </a>
                 </li>
@@ -355,7 +355,7 @@
             <div class="navbar-right" id="navbarRight">
 
                 <% if ("buyer".equals(userRole)) { %>
-                <a href="${pageContext.request.contextPath}/buyer/cart.jsp">
+                <a href="${pageContext.request.contextPath}/views/buyer/cart.jsp">
                     🛒 Cart
                     <span class="cart-badge"></span>
                 </a>
@@ -364,7 +364,7 @@
                 <% if (userRole != null) { %>
                 <div class="navbar-user">
                     <span>${sessionScope.userName}</span>
-                    <a href="${pageContext.request.contextPath}/logout" class="btn btn-small btn-outline">Logout</a>
+                    <a href="${pageContext.request.contextPath}/logout" class="btn btn-small btn-outline artopia-logout-btn">Logout</a>
                 </div>
                 <% } else { %>
                 <a href="${pageContext.request.contextPath}/views/public/login.jsp" class="btn btn-small btn-outline">Login</a>
@@ -376,3 +376,4 @@
         </div>
     </div>
 </nav>
+<jsp:include page="/views/components/artopia_toast.jsp" />

@@ -17,13 +17,15 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<%@ page import="model.Art" %>
+<%@ page import="com.artopia1.user.model.Art" %>
 <%
     List<Art> allArtworks = (List<Art>) request.getAttribute("allArtworks");
     List<Art> myArtworks  = (List<Art>) request.getAttribute("myArtworks");
     String    successMsg  = (String)    request.getAttribute("successMsg");
     String    errorMsg    = (String)    request.getAttribute("errorMsg");
     String    ctx         = request.getContextPath();
+    String    userRole    = (String) session.getAttribute("userRole");
+    boolean   isArtist    = userRole != null && "artist".equalsIgnoreCase(userRole);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -174,6 +176,93 @@
             transition:opacity .2s;
         }
         .btn-add:hover{opacity:.82}
+        .header-slot-end{
+            width:10.5rem;
+            flex-shrink:0;
+            min-height:1px;
+        }
+
+        /* ══════════════════════════════════════════════════════════
+           ARTIST SIDEBAR (logged-in artist only)
+        ══════════════════════════════════════════════════════════ */
+        .page-studio{
+            display:flex;
+            align-items:flex-start;
+            gap:2rem;
+            max-width:1520px;
+            margin:0 auto;
+            padding:0 1.5rem 4rem;
+            position:relative;
+            z-index:1;
+        }
+        .artist-sidebar{
+            flex:0 0 260px;
+            position:sticky;
+            top:5.5rem;
+            align-self:flex-start;
+            padding:1.35rem 1.25rem 1.5rem;
+            background:var(--surface);
+            border:1px solid var(--border);
+            border-radius:var(--r);
+        }
+        .artist-sidebar__eyebrow{
+            font-size:8px;
+            letter-spacing:.28em;
+            text-transform:uppercase;
+            color:var(--text-3);
+            margin-bottom:.5rem;
+        }
+        .artist-sidebar__title{
+            font-family:'Cormorant Garamond',serif;
+            font-size:1.35rem;
+            font-weight:400;
+            color:var(--text);
+            margin-bottom:.75rem;
+        }
+        .artist-sidebar__hint{
+            font-size:11px;
+            line-height:1.55;
+            color:var(--text-2);
+            margin-bottom:1.25rem;
+        }
+        .artist-sidebar__btn-add{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:.45rem;
+            width:100%;
+            padding:.75rem 1rem;
+            margin-bottom:.85rem;
+            background:var(--accent);
+            color:#080808;
+            border:none;
+            font-size:9px;
+            font-weight:600;
+            letter-spacing:.18em;
+            text-transform:uppercase;
+            border-radius:var(--r);
+            transition:opacity .2s;
+        }
+        .artist-sidebar__btn-add:hover{opacity:.88}
+        .artist-sidebar__btn-tab{
+            display:block;
+            width:100%;
+            padding:.55rem .75rem;
+            background:transparent;
+            border:1px solid var(--border);
+            color:var(--text-2);
+            font-size:9px;
+            letter-spacing:.16em;
+            text-transform:uppercase;
+            border-radius:var(--r);
+            transition:border-color .2s,color .2s,background .2s;
+        }
+        .artist-sidebar__btn-tab:hover{
+            border-color:var(--border-2);
+            color:var(--text);
+            background:var(--surface-2);
+        }
+        .gallery-main{flex:1;min-width:0}
 
         /* ══════════════════════════════════════════════════════════
            FLASH MESSAGES
@@ -645,6 +734,15 @@
         /* ══════════════════════════════════════════════════════════
            RESPONSIVE
         ══════════════════════════════════════════════════════════ */
+        @media(max-width:900px){
+            .page-studio{flex-direction:column;gap:1.25rem;padding:0 1.2rem 3rem}
+            .artist-sidebar{
+                position:relative;
+                top:auto;
+                flex:1 1 auto;
+                width:100%;
+            }
+        }
         @media(max-width:640px){
             .wrap{padding:0 1.2rem}
             .fg-row{grid-template-columns:1fr}
@@ -657,6 +755,21 @@
 <body>
 
 <jsp:include page="../components/navbar.jsp" />
+
+<% if (isArtist) { %>
+<div class="page-studio">
+    <aside class="artist-sidebar" aria-label="Artist tools">
+        <p class="artist-sidebar__eyebrow">Your studio</p>
+        <h2 class="artist-sidebar__title">Your artworks</h2>
+        <p class="artist-sidebar__hint">Click <strong>Add artwork</strong> to enter the <strong>name</strong>, <strong>type</strong> (category), and a <strong>short description</strong>. Then add price and an image to publish.</p>
+        <button type="button" class="artist-sidebar__btn-add" onclick="openModal('addOverlay')">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+            Add artwork
+        </button>
+        <button type="button" class="artist-sidebar__btn-tab" onclick="artopiaGoMyCollection()">Open My collection</button>
+    </aside>
+    <div class="gallery-main">
+<% } %>
 
 <%-- ════════════════════════════════════════════════════════
      PAGE HEADER
@@ -676,20 +789,9 @@
             <button class="tab-btn"           role="tab" data-target="panel-mine">My Collection</button>
         </nav>
 
-        <button class="btn-add" onclick="openModal('addOverlay')">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-            Add Artwork
-        </button>
+        <div class="header-slot-end" aria-hidden="true"></div>
     </div>
 </header>
-
-<%-- Flash --%>
-<% if (successMsg != null && !successMsg.isEmpty()) { %>
-<div class="wrap"><div class="flash flash-ok"><%= successMsg %></div></div>
-<% } %>
-<% if (errorMsg != null && !errorMsg.isEmpty()) { %>
-<div class="wrap"><div class="flash flash-err"><%= errorMsg %></div></div>
-<% } %>
 
 <main class="wrap">
 
@@ -728,7 +830,11 @@
                     <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
                 </svg>
                 <h3>No artworks yet</h3>
-                <p>The gallery is empty — be the first to add a piece.</p>
+                <% if (isArtist) { %>
+                <p>The gallery is empty — use <strong style="color:var(--accent)">Add artwork</strong> in the sidebar to publish the first piece.</p>
+                <% } else { %>
+                <p>The gallery is empty — check back soon.</p>
+                <% } %>
             </div>
             <% } %>
         </div>
@@ -822,7 +928,11 @@
                     <path d="M21 15l-5-5L5 21"/>
                 </svg>
                 <h3>No artworks yet</h3>
-                <p>Click <strong style="color:var(--accent)">Add Artwork</strong> to publish your first piece.</p>
+                <% if (isArtist) { %>
+                <p>Use <strong style="color:var(--accent)">Add artwork</strong> in the sidebar to publish your first piece.</p>
+                <% } else { %>
+                <p>Sign in as an artist to publish works here.</p>
+                <% } %>
             </div>
             <% } %>
         </div>
@@ -830,6 +940,10 @@
 
 </main>
 
+<% if (isArtist) { %>
+    </div>
+</div>
+<% } %>
 
 <%-- ════════════════════════════════════════════════════════
      MODAL: ADD ARTWORK
@@ -845,37 +959,36 @@
                 <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
 
                 <div class="fg">
-                    <label for="add_title">Title</label>
+                    <label for="add_title">Artwork name</label>
                     <input type="text" id="add_title" name="title"
-                           placeholder="Enter artwork title" required>
+                           placeholder="Name of your piece" required>
                 </div>
 
                 <div class="fg">
-                    <label for="add_desc">Description</label>
-                    <textarea id="add_desc" name="description"
-                              placeholder="Describe your artwork…"></textarea>
+                    <label for="add_cat">Type (category)</label>
+                    <select id="add_cat" name="category" required>
+                        <option value="" disabled selected>— Select type —</option>
+                        <option value="Painting">Painting</option>
+                        <option value="Digital Art">Digital Art</option>
+                        <option value="Photography">Photography</option>
+                        <option value="Sculpture">Sculpture</option>
+                        <option value="Watercolour">Watercolour</option>
+                        <option value="Illustration">Illustration</option>
+                        <option value="Mixed Media">Mixed Media</option>
+                        <option value="Other">Other</option>
+                    </select>
                 </div>
 
-                <div class="fg-row">
-                    <div class="fg">
-                        <label for="add_price">Price (USD)</label>
-                        <input type="number" id="add_price" name="price"
-                               step="0.01" min="0" placeholder="0.00" required>
-                    </div>
-                    <div class="fg">
-                        <label for="add_cat">Category</label>
-                        <select id="add_cat" name="category" required>
-                            <option value="" disabled selected>— Select —</option>
-                            <option value="Painting">Painting</option>
-                            <option value="Digital Art">Digital Art</option>
-                            <option value="Photography">Photography</option>
-                            <option value="Sculpture">Sculpture</option>
-                            <option value="Watercolour">Watercolour</option>
-                            <option value="Illustration">Illustration</option>
-                            <option value="Mixed Media">Mixed Media</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
+                <div class="fg">
+                    <label for="add_desc">Short description</label>
+                    <textarea id="add_desc" name="description" rows="3"
+                              placeholder="A few lines about the artwork…"></textarea>
+                </div>
+
+                <div class="fg">
+                    <label for="add_price">Price (USD)</label>
+                    <input type="number" id="add_price" name="price"
+                           step="0.01" min="0" placeholder="0.00" required>
                 </div>
 
                 <div class="fg">
@@ -910,34 +1023,33 @@
                 <input type="hidden" id="edit_id" name="artId">
 
                 <div class="fg">
-                    <label for="edit_title">Title</label>
+                    <label for="edit_title">Artwork name</label>
                     <input type="text" id="edit_title" name="title" required>
                 </div>
 
                 <div class="fg">
-                    <label for="edit_desc">Description</label>
+                    <label for="edit_cat">Type (category)</label>
+                    <select id="edit_cat" name="category" required>
+                        <option value="Painting">Painting</option>
+                        <option value="Digital Art">Digital Art</option>
+                        <option value="Photography">Photography</option>
+                        <option value="Sculpture">Sculpture</option>
+                        <option value="Watercolour">Watercolour</option>
+                        <option value="Illustration">Illustration</option>
+                        <option value="Mixed Media">Mixed Media</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="fg">
+                    <label for="edit_desc">Short description</label>
                     <textarea id="edit_desc" name="description"></textarea>
                 </div>
 
-                <div class="fg-row">
-                    <div class="fg">
-                        <label for="edit_price">Price (USD)</label>
-                        <input type="number" id="edit_price" name="price"
-                               step="0.01" min="0" required>
-                    </div>
-                    <div class="fg">
-                        <label for="edit_cat">Category</label>
-                        <select id="edit_cat" name="category" required>
-                            <option value="Painting">Painting</option>
-                            <option value="Digital Art">Digital Art</option>
-                            <option value="Photography">Photography</option>
-                            <option value="Sculpture">Sculpture</option>
-                            <option value="Watercolour">Watercolour</option>
-                            <option value="Illustration">Illustration</option>
-                            <option value="Mixed Media">Mixed Media</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
+                <div class="fg">
+                    <label for="edit_price">Price (USD)</label>
+                    <input type="number" id="edit_price" name="price"
+                           step="0.01" min="0" required>
                 </div>
 
                 <div class="fg">
@@ -985,6 +1097,16 @@
 <jsp:include page="../components/footer.jsp" />
 
 <script>
+    function artopiaGoMyCollection() {
+        document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('is-active'); });
+        document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('is-active'); });
+        var mineBtn = document.querySelector('.tab-btn[data-target="panel-mine"]');
+        var minePanel = document.getElementById('panel-mine');
+        if (mineBtn) mineBtn.classList.add('is-active');
+        if (minePanel) minePanel.classList.add('is-active');
+        minePanel && minePanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
     /* ── Tab switching ─────────────────────────────────────── */
     document.querySelectorAll('.tab-btn').forEach(function(btn) {
         btn.addEventListener('click', function() {
