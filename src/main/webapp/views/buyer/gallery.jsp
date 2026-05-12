@@ -632,9 +632,7 @@
 
 <jsp:include page="../components/navbar.jsp" />
 
-<%-- ════════════════════════════════════════════════════
-     STICKY HEADER
-════════════════════════════════════════════════════ --%>
+<%--  STICKY HEADER--%>
 <header class="pg-header">
     <div class="inner">
         <span class="pg-logo">Arto<em>pia</em></span>
@@ -675,17 +673,13 @@
     </div>
 </header>
 
-<%-- ════════════════════════════════════════════════════
-     SIDEBAR BACKDROP (mobile)
-════════════════════════════════════════════════════ --%>
+<%-- SIDEBAR BACKDROP (mobile) --%>
 <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
 
-<%-- ════════════════════════════════════════════════════
-     PAGE BODY
-════════════════════════════════════════════════════ --%>
+<%-- PAGE BODY --%>
 <div class="page-body">
 
-    <%-- ── SIDEBAR FILTERS ──────────────────────────── --%>
+    <%-- SIDEBAR FILTERS --%>
     <aside class="sidebar" id="sidebar">
 
         <div class="sidebar-head">
@@ -854,9 +848,7 @@
 </div><%-- /.page-body --%>
 
 
-<%-- ════════════════════════════════════════════════════
-     DETAIL MODAL
-════════════════════════════════════════════════════ --%>
+<%-- DETAIL MODAL --%>
 <div class="overlay" id="detailOverlay">
     <div class="modal-detail">
         <div class="modal-img">
