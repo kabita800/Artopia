@@ -365,9 +365,7 @@
             color:var(--accent);
         }
 
-        /* ══════════════════════════════════════════════════════════
-           MY COLLECTION — structured grid
-        ══════════════════════════════════════════════════════════ */
+        /* MY COLLECTION — structured grid */
         .my-grid{
             display:grid;
             grid-template-columns:repeat(auto-fill,minmax(285px,1fr));
@@ -534,9 +532,7 @@
         .ibtn-edit:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
         .ibtn-del:hover{border-color:var(--danger);color:#d46060;background:var(--danger-dim)}
 
-        /* ══════════════════════════════════════════════════════════
-           EMPTY STATE
-        ══════════════════════════════════════════════════════════ */
+        /* EMPTY STATE */
         .empty{
             grid-column:1/-1;
             text-align:center;
