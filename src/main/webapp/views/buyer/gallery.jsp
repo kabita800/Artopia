@@ -918,9 +918,7 @@
         bd.classList.toggle('show');
     }
 
-    /* ══════════════════════════════════════════════════
-       CATEGORY PILL TOGGLE
-    ══════════════════════════════════════════════════ */
+    /*  CATEGORY PILL TOGGLE */
     document.querySelectorAll('.cat-item').forEach(function(item) {
         item.addEventListener('click', function() {
             item.classList.toggle('active');
@@ -928,9 +926,7 @@
         });
     });
 
-    /* ══════════════════════════════════════════════════
-       AVAILABILITY RADIO
-    ══════════════════════════════════════════════════ */
+    /* AVAILABILITY RADIO */
     document.querySelectorAll('.avail-item').forEach(function(item) {
         item.addEventListener('click', function() {
             document.querySelectorAll('.avail-item').forEach(function(a){ a.classList.remove('active'); });
@@ -939,9 +935,7 @@
         });
     });
 
-    /* ══════════════════════════════════════════════════
-       APPLY FILTERS (search + filter + sort together)
-    ══════════════════════════════════════════════════ */
+    /*  APPLY FILTERS  */
     function applyFilters() {
         var q        = document.getElementById('searchInput').value.toLowerCase().trim();
         var sort     = document.getElementById('sortSelect').value;
@@ -1010,9 +1004,7 @@
         applyFilters();
     }
 
-    /* ══════════════════════════════════════════════════
-       VIEW MODE
-    ══════════════════════════════════════════════════ */
+    /* VIEW MODE */
     function setView(cols) {
         var grid = document.getElementById('artGrid');
         grid.classList.remove('view-2','view-4');
@@ -1023,9 +1015,7 @@
         });
     }
 
-    /* ══════════════════════════════════════════════════
-       COUNT
-    ══════════════════════════════════════════════════ */
+    /* COUNT */
     function updateCount(n) {
         if (n === undefined) {
             n = document.querySelectorAll('.art-card:not([style*="display: none"])').length;
@@ -1034,9 +1024,7 @@
         document.getElementById('visibleCount').textContent = n;
     }
 
-    /* ══════════════════════════════════════════════════
-       DETAIL MODAL
-    ══════════════════════════════════════════════════ */
+    /* DETAIL MODAL */
     function openDetail(id, title, artist, cat, desc, price, imgSrc, sold) {
         activeDetail = { id: id, title: title, price: price };
         document.getElementById('d-img').src          = imgSrc;
@@ -1093,9 +1081,7 @@
         if (e.key === 'Escape') closeDetail();
     });
 
-    /* ══════════════════════════════════════════════════
-       CART
-    ══════════════════════════════════════════════════ */
+    /* CART */
     function addToCart(id, title, price, btn) {
         var alreadyIn = cart.some(function(c){ return c.id == id; });
         if (alreadyIn) { showToast('"' + title + '" is already in your cart.'); return; }
