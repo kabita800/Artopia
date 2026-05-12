@@ -1,7 +1,6 @@
-<%-- ================================================================
+<%--
    NAVBAR COMPONENT - Reusable Navigation Bar
-   Include in all pages: <jsp:include page="../components/navbar.jsp" />
-   ================================================================ --%>
+   Include in all pages: <jsp:include page="../components/navbar.jsp" />  --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
