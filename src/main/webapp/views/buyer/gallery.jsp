@@ -1112,9 +1112,7 @@
         window.location.href = '<%= ctx %>/cart';
     }
 
-    /* ══════════════════════════════════════════════════
-       TOAST
-    ══════════════════════════════════════════════════ */
+    /* TOAST */
     var toastTimer;
     function showToast(msg) {
         clearTimeout(toastTimer);
