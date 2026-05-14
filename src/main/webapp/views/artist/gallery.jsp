@@ -765,9 +765,7 @@
 
 <main class="wrap">
 
-    <%-- ══════════════════════════════════════════════════════
-         TAB 1 — ALL ARTWORKS
-    ══════════════════════════════════════════════════════ --%>
+    <%-- TAB 1 — ALL ARTWORKS --%>
     <section class="tab-panel is-active" id="panel-all">
 
         <div class="sec-head">
@@ -810,9 +808,7 @@
         </div>
     </section>
 
-    <%-- ══════════════════════════════════════════════════════
-         TAB 2 — MY COLLECTION
-    ══════════════════════════════════════════════════════ --%>
+    <%-- TAB 2 — MY COLLECTION --%>
     <section class="tab-panel" id="panel-mine">
 
         <div class="sec-head">
