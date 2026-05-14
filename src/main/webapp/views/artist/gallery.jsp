@@ -743,9 +743,7 @@
     <div class="gallery-main">
 <% } %>
 
-<%-- ════════════════════════════════════════════════════════
-     PAGE HEADER
-════════════════════════════════════════════════════════ --%>
+<%-- PAGE HEADER --%>
 <header class="pg-header">
     <div class="wrap">
         <div class="header-left">
