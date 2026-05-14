@@ -699,17 +699,13 @@
         ::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:3px}
         ::-webkit-scrollbar-thumb:hover{background:var(--text-3)}
 
-        /* ══════════════════════════════════════════════════════════
-           ANIMATION
-        ══════════════════════════════════════════════════════════ */
+        /* ANIMATION */
         @keyframes fadeUp{
             from{opacity:0;transform:translateY(14px)}
             to  {opacity:1;transform:none}
         }
 
-        /* ══════════════════════════════════════════════════════════
-           RESPONSIVE
-        ══════════════════════════════════════════════════════════ */
+        /* RESPONSIVE */
         @media(max-width:900px){
             .page-studio{flex-direction:column;gap:1.25rem;padding:0 1.2rem 3rem}
             .artist-sidebar{
