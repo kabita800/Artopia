@@ -693,9 +693,7 @@
             border-top:1px solid var(--border);
         }
 
-        /* ══════════════════════════════════════════════════════════
-           SCROLLBAR
-        ══════════════════════════════════════════════════════════ */
+        /* SCROLLBAR */
         ::-webkit-scrollbar{width:5px}
         ::-webkit-scrollbar-track{background:var(--bg)}
         ::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:3px}
