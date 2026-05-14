@@ -36,9 +36,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
 
-        /* ══════════════════════════════════════════════════════════
-           TOKENS
-        ══════════════════════════════════════════════════════════ */
+        /* TOKENS */
         :root {
             --bg:          #080808;
             --surface:     #0f0f0f;
@@ -57,9 +55,7 @@
             --ease:        cubic-bezier(.4,0,.2,1);
         }
 
-        /* ══════════════════════════════════════════════════════════
-           RESET
-        ══════════════════════════════════════════════════════════ */
+        /*  RESET */
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
         html{scroll-behavior:smooth}
         body{
@@ -83,9 +79,7 @@
         img{display:block}
         button{font-family:'DM Mono',monospace;cursor:pointer}
 
-        /* ══════════════════════════════════════════════════════════
-           LAYOUT WRAPPER
-        ══════════════════════════════════════════════════════════ */
+        /*  LAYOUT WRAPPER */
         .wrap{
             max-width:1340px;
             margin:0 auto;
@@ -94,9 +88,7 @@
             z-index:1;
         }
 
-        /* ══════════════════════════════════════════════════════════
-           STICKY PAGE HEADER
-        ══════════════════════════════════════════════════════════ */
+        /* STICKY PAGE HEADER */
         .pg-header{
             position:sticky;
             top:0;
@@ -182,9 +174,7 @@
             min-height:1px;
         }
 
-        /* ══════════════════════════════════════════════════════════
-           ARTIST SIDEBAR (logged-in artist only)
-        ══════════════════════════════════════════════════════════ */
+        /* ARTIST SIDEBAR (logged-in artist only) */
         .page-studio{
             display:flex;
             align-items:flex-start;
@@ -264,9 +254,7 @@
         }
         .gallery-main{flex:1;min-width:0}
 
-        /* ══════════════════════════════════════════════════════════
-           FLASH MESSAGES
-        ══════════════════════════════════════════════════════════ */
+        /*  FLASH MESSAGES */
         .flash{
             border-left:2px solid;
             padding:.8rem 1.2rem;
@@ -278,9 +266,7 @@
         .flash-ok { border-color:#4caf77; background:rgba(76,175,119,.07); color:#4caf77; }
         .flash-err{ border-color:var(--danger); background:var(--danger-dim); color:#d46060; }
 
-        /* ══════════════════════════════════════════════════════════
-           TAB PANELS
-        ══════════════════════════════════════════════════════════ */
+        /* TAB PANELS */
         .tab-panel{display:none;padding:3rem 0 7rem}
         .tab-panel.is-active{display:block}
 
@@ -306,9 +292,7 @@
             color:var(--text-3);
         }
 
-        /* ══════════════════════════════════════════════════════════
-           ALL-ARTWORKS — masonry columns
-        ══════════════════════════════════════════════════════════ */
+        /* ALL-ARTWORKS — masonry columns */
         .masonry{
             columns:4;
             column-gap:1.2rem;
@@ -381,9 +365,7 @@
             color:var(--accent);
         }
 
-        /* ══════════════════════════════════════════════════════════
-           MY COLLECTION — structured grid
-        ══════════════════════════════════════════════════════════ */
+        /* MY COLLECTION — structured grid */
         .my-grid{
             display:grid;
             grid-template-columns:repeat(auto-fill,minmax(285px,1fr));
@@ -550,9 +532,7 @@
         .ibtn-edit:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
         .ibtn-del:hover{border-color:var(--danger);color:#d46060;background:var(--danger-dim)}
 
-        /* ══════════════════════════════════════════════════════════
-           EMPTY STATE
-        ══════════════════════════════════════════════════════════ */
+        /* EMPTY STATE */
         .empty{
             grid-column:1/-1;
             text-align:center;

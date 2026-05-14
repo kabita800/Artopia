@@ -118,10 +118,6 @@
                 Manage Arts
             </a>
 
-            <a href="${pageContext.request.contextPath}/buyer/gallery">
-                Gallery
-            </a>
-
             <a href="${pageContext.request.contextPath}/logout" class="artopia-logout-btn">
                 Logout
             </a>

@@ -84,9 +84,7 @@
         .text-center { text-align: center; }
         .text-muted   { color: var(--text-muted); }
 
-        /* ============================================================
-           LAYOUT
-        ============================================================ */
+        /* LAYOUT */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -152,9 +150,7 @@
             margin: 0 auto;
         }
 
-        /* ============================================================
-           CARDS
-        ============================================================ */
+        /* CARDS */
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -171,12 +167,7 @@
 
         .card-body { padding: var(--spacing-lg); }
 
-        /* ============================================================
-           STORY SECTION
-        ============================================================ */
-        /* ============================================================
-   STORY SECTION (UPDATED ONLY)
-============================================================ */
+        /* STORY SECTION */
 
         .story-image-box {
             background: linear-gradient(135deg, #1a1200 0%, #0f0c00 100%);
@@ -238,9 +229,7 @@
             line-height: 1.8;
             margin-bottom: var(--spacing-sm);
         }
-        /* ============================================================
-           VALUES SECTION
-        ============================================================ */
+        /* VALUES SECTION */
         .section-alt { background-color: var(--bg-section-alt); }
 
         .values-card h3 {
@@ -254,9 +243,7 @@
             gap: 0.5rem;
         }
 
-        /* ============================================================
-           STATS SECTION
-        ============================================================ */
+        /*  STATS SECTION */
         .stat-number {
             font-family: var(--font-display);
             font-size: 2.6rem;
@@ -277,9 +264,7 @@
             margin: 0;
         }
 
-        /* ============================================================
-           TEAM SECTION
-        ============================================================ */
+        /* TEAM SECTION */
         .team-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -362,9 +347,7 @@
         }
 
 
-        /* ============================================================
-           SECTION DIVIDER
-        ============================================================ */
+        /* SECTION DIVIDER */
         .section-label {
             display: inline-flex;
             align-items: center;
@@ -384,9 +367,7 @@
             background: var(--accent);;
         }
 
-        /* ============================================================
-           ANIMATIONS
-        ============================================================ */
+        /* ANIMATIONS */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(30px); }
             to   { opacity: 1; transform: translateY(0); }
@@ -398,9 +379,7 @@
         .hero h1      { animation: fadeUp 0.6s ease 0.25s both; }
         .hero p       { animation: fadeUp 0.6s ease 0.4s both; }
 
-        /* ============================================================
-           RESPONSIVE
-        ============================================================ */
+        /*  RESPONSIVE */
         @media (max-width: 1100px) {
             .team-grid { grid-template-columns: repeat(3, 1fr); }
         }
@@ -427,9 +406,7 @@
 
 <main>
 
-    <!-- ============================================================
-         HERO
-    ============================================================ -->
+    <!--  HERO -->
     <section class="hero">
         <div class="container">
             <div class="section-label">Our Story</div>
@@ -438,9 +415,7 @@
         </div>
     </section>
 
-    <!-- ============================================================
-         STORY
-    ============================================================ -->
+    <!-- STORY -->
     <section>
         <div class="container">
             <div class="grid grid-2" style="align-items: center; gap: var(--spacing-xl);">
@@ -466,9 +441,7 @@
         </div>
     </section>
 
-    <!-- ============================================================
-         VALUES
-    ============================================================ -->
+    <!-- VALUES -->
     <section class="section-alt">
         <div class="container">
             <div class="text-center mb-3">
@@ -523,9 +496,7 @@
         </div>
     </section>
 
-    <!-- ============================================================
-         STATISTICS
-    ============================================================ -->
+    <!-- STATISTICS -->
     <section>
         <div class="container">
             <div class="text-center mb-3">
@@ -566,12 +537,8 @@
         </div>
     </section>
 
-    <!-- ============================================================
-         TEAM — 5 MEMBERS
-    ============================================================ -->
-    <!-- ============================================================
-     TEAM — 5 MEMBERS (FIXED)
-============================================================ -->
+    <!-- TEAM — 5 MEMBERS -->
+
     <section class="section-alt">
         <div class="container">
             <div class="text-center mb-3">
@@ -607,7 +574,10 @@
 
                 <!-- TEAM MEMBER 3 -->
                 <div class="team-card">
-                    <div class="team-avatar">👨‍🎓</div>
+                    <div class="team-avatar">
+                        <img src="${pageContext.request.contextPath}/views/images/soni.jpeg"
+                             alt="Soni Shrestha">
+                    </div>
                     <div class="card-body">
                         <h3>Soni Shrestha</h3>
                         <p class="team-role">Database Manager</p>
