@@ -730,7 +730,7 @@
         </div>
     </div>
 
-    <%-- ══ ART GRID ══ --%>
+    <%--  ART GRID  --%>
     <div id="artGrid">
         <% if (artworks != null && !artworks.isEmpty()) {
             for (Art art : artworks) {
@@ -817,7 +817,7 @@
 
 </div><%-- /.page-body --%>
 
-<%-- ══ DETAIL MODAL ══ --%>
+<%-- DETAIL MODAL --%>
 <div class="overlay" id="detailOverlay">
     <div class="modal-detail">
         <div class="modal-img">
@@ -844,7 +844,7 @@
     </div>
 </div>
 
-<%-- ══ TOAST ══ --%>
+<%-- TOAST --%>
 <div class="toast" id="toast">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
         <polyline points="20 6 9 17 4 12"/>
@@ -866,7 +866,7 @@
     var isLoggedIn = <%= isLoggedIn %>;
     var loginUrl   = '<%= ctx %>/login';
 
-    /* ══ INIT ══ */
+    /* INIT */
     (function init() {
         updateCartUI();
         updateCount();
@@ -875,7 +875,7 @@
         }
     })();
 
-    /* ══ SYNC SEARCH (keep both inputs in step) ══ */
+    /*  SYNC SEARCH (keep both inputs in step)  */
     function syncSearch(source) {
         var headerInput = document.getElementById('searchInput');
         var topInput    = document.getElementById('searchInputTop');
@@ -886,7 +886,7 @@
         }
     }
 
-    /* ══ AVAILABILITY ══ */
+    /* AVAILABILITY */
     function setAvail(btn) {
         document.querySelectorAll('.avail-btn').forEach(function(b){ b.classList.remove('active'); });
         btn.classList.add('active');
@@ -894,7 +894,7 @@
         applyFilters();
     }
 
-    /* ══ CATEGORY PILLS ══ */
+    /* CATEGORY PILLS  */
     function setCategoryPill(btn, cat) {
         document.querySelectorAll('.cat-pill').forEach(function(p){ p.classList.remove('active'); });
         btn.classList.add('active');
@@ -903,7 +903,7 @@
         updateActiveFilterChips();
     }
 
-    /* ══ MASTER FILTER + SORT ══ */
+    /*  MASTER FILTER + SORT  */
     function applyFilters() {
         var q        = document.getElementById('searchInput').value.toLowerCase().trim();
         var sort     = document.getElementById('sortSelect').value;
@@ -945,7 +945,7 @@
         updateActiveFilterChips();
     }
 
-    /* ══ ACTIVE FILTER CHIPS ══ */
+    /* ACTIVE FILTER CHIPS  */
     function updateActiveFilterChips() {
         var wrap = document.getElementById('activeFilters');
         wrap.innerHTML = '';
@@ -1002,7 +1002,7 @@
         return chip;
     }
 
-    /* ══ CLEAR ALL ══ */
+    /* CLEAR ALL  */
     function clearFilters() {
         document.getElementById('searchInput').value    = '';
         document.getElementById('searchInputTop').value = '';
@@ -1018,7 +1018,7 @@
         applyFilters();
     }
 
-    /* ══ VIEW MODE ══ */
+    /* VIEW MODE */
     function setView(cols) {
         var grid = document.getElementById('artGrid');
         grid.classList.remove('view-2','view-3','view-5');
@@ -1035,13 +1035,13 @@
         document.getElementById('visibleCount').textContent = n;
     }
 
-    /* ══ REDIRECT GUEST TO LOGIN ══ */
+    /* REDIRECT GUEST TO LOGIN */
     function redirectToLogin() {
         showToast('Please log in to add artworks to your cart.', true);
         setTimeout(function(){ window.location.href = loginUrl; }, 1400);
     }
 
-    /* ══ DETAIL MODAL ══ */
+    /*  DETAIL MODAL */
     function openDetail(id, title, artist, cat, desc, price, imgSrc, sold) {
         activeDetail = { id:id, title:title, price:price };
         document.getElementById('d-img').src            = imgSrc;
@@ -1117,7 +1117,7 @@
         if (e.key === 'Escape') closeDetail();
     });
 
-    /* ══ CART ══ */
+    /* CART */
     function addToCart(id, title, price, btn) {
         /* Guard: guest cannot add to cart */
         if (!isLoggedIn) {
@@ -1151,7 +1151,7 @@
 
     function openCartPage() { window.location.href = '<%= ctx %>/cart'; }
 
-    /* ══ TOAST ══ */
+    /*  TOAST  */
     var toastTimer;
     function showToast(msg, isWarn) {
         clearTimeout(toastTimer);
