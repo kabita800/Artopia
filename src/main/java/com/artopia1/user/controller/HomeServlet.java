@@ -8,12 +8,16 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+// Handles homepage routing for application entry point
 @WebServlet("/home")
 public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/views/shared/home.jsp").forward(request, response);
+
+        // Forward request to home view (JSP)
+        request.getRequestDispatcher("/views/shared/home.jsp")
+                .forward(request, response);
     }
 }
