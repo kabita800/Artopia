@@ -95,8 +95,10 @@ public class UserServlet extends HttpServlet {
                 session.setAttribute("userName", user.getName());
                 session.setMaxInactiveInterval(30 * 60);
 
-                // Set welcome message
-                session.setAttribute("flashSuccess", "Welcome back, " + user.getName());
+                String welcome = user.getName() != null && !user.getName().isBlank()
+                        ? "Welcome, " + user.getName() + ". You're signed in."
+                        : "Signed in successfully.";
+                session.setAttribute("flashSuccess", welcome);
 
                 // Store email in cookie for convenience
                 Cookie cookie = new Cookie("userEmail", user.getEmail());
