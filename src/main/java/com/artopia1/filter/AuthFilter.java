@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
+/* Project started */
+
 @WebFilter("/*")
 public class AuthFilter implements Filter {
 
@@ -47,6 +49,7 @@ public class AuthFilter implements Filter {
 
         chain.doFilter(req, res);
     }
+    
 
     private boolean isPublicPath(String path) {
         return "/".equals(path)
@@ -86,3 +89,4 @@ public class AuthFilter implements Filter {
                 || path.endsWith(".webp");
     }
 }
+/* Project ended */
