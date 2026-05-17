@@ -549,9 +549,7 @@
         }
         .empty p{font-size:11px;opacity:.6}
 
-        /* ══════════════════════════════════════════════════════════
-           MODALS
-        ══════════════════════════════════════════════════════════ */
+        /* MODALS */
         .overlay{
             position:fixed;inset:0;
             background:rgba(0,0,0,.80);
@@ -695,25 +693,19 @@
             border-top:1px solid var(--border);
         }
 
-        /* ══════════════════════════════════════════════════════════
-           SCROLLBAR
-        ══════════════════════════════════════════════════════════ */
+        /* SCROLLBAR */
         ::-webkit-scrollbar{width:5px}
         ::-webkit-scrollbar-track{background:var(--bg)}
         ::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:3px}
         ::-webkit-scrollbar-thumb:hover{background:var(--text-3)}
 
-        /* ══════════════════════════════════════════════════════════
-           ANIMATION
-        ══════════════════════════════════════════════════════════ */
+        /* ANIMATION */
         @keyframes fadeUp{
             from{opacity:0;transform:translateY(14px)}
             to  {opacity:1;transform:none}
         }
 
-        /* ══════════════════════════════════════════════════════════
-           RESPONSIVE
-        ══════════════════════════════════════════════════════════ */
+        /* RESPONSIVE */
         @media(max-width:900px){
             .page-studio{flex-direction:column;gap:1.25rem;padding:0 1.2rem 3rem}
             .artist-sidebar{
@@ -751,9 +743,7 @@
     <div class="gallery-main">
 <% } %>
 
-<%-- ════════════════════════════════════════════════════════
-     PAGE HEADER
-════════════════════════════════════════════════════════ --%>
+<%-- PAGE HEADER --%>
 <header class="pg-header">
     <div class="wrap">
         <div class="header-left">
@@ -775,9 +765,7 @@
 
 <main class="wrap">
 
-    <%-- ══════════════════════════════════════════════════════
-         TAB 1 — ALL ARTWORKS
-    ══════════════════════════════════════════════════════ --%>
+    <%-- TAB 1 — ALL ARTWORKS --%>
     <section class="tab-panel is-active" id="panel-all">
 
         <div class="sec-head">
@@ -820,9 +808,7 @@
         </div>
     </section>
 
-    <%-- ══════════════════════════════════════════════════════
-         TAB 2 — MY COLLECTION
-    ══════════════════════════════════════════════════════ --%>
+    <%-- TAB 2 — MY COLLECTION --%>
     <section class="tab-panel" id="panel-mine">
 
         <div class="sec-head">
