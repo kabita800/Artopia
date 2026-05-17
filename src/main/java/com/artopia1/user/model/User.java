@@ -61,4 +61,20 @@ public class User {
         this.password = password;
         this.role = role;
     }
+    // this code acts as the helper for jsp
+    public String getInitial() {
+        return (name != null && !name.isEmpty())
+                ? String.valueOf(name.charAt(0)).toUpperCase()
+                : "?";
+    }
+
+    public String getRoleCssClass() {
+        if (role == null) return "buyer-role";
+        return switch (role.toLowerCase()) {
+            case "admin"  -> "admin-role";
+            case "artist" -> "artist-role";
+            default       -> "buyer-role";
+        };
+    }
+}
 }
