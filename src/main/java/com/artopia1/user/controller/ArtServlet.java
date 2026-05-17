@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
+// Main servlet for handling artwork add, update, and delete operations
 @WebServlet(urlPatterns = {"/art/add", "/art/update", "/art/delete"})
 @MultipartConfig(
         maxFileSize = 5 * 1024 * 1024,
@@ -30,7 +31,10 @@ public class ArtServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
+    // DAO for artwork database operations
     private final ArtDAO artDAO = new ArtDAO();
+
+    // DAO for user database operations
     private final UserDAO userDAO = new UserDAO();
 
     @Override
@@ -38,16 +42,24 @@ public class ArtServlet extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
+
+        // Get current session (if exists)
         HttpSession session = request.getSession(false);
+
+        // Get logged-in user from session
         User user = session != null ? (User) session.getAttribute("user") : null;
+
         String role = session != null ? (String) session.getAttribute("userRole") : "";
 
         String ctx = request.getContextPath();
+
+        // Allow only artist users to access this functionality
         if (user == null || !"artist".equalsIgnoreCase(role)) {
             response.sendRedirect(ctx + "/views/public/login.jsp");
             return;
         }
 
+        // CSRF security check to prevent unauthorized requests
         if (!CsrfUtil.validate(session, request.getParameter("csrfToken"))) {
             session.setAttribute("galleryFlashErr", "Security check failed. Please refresh the page and try again.");
             response.sendRedirect(ctx + "/artist/gallery");
@@ -55,7 +67,9 @@ public class ArtServlet extends HttpServlet {
         }
 
         String path = request.getServletPath();
+
         try {
+            // Route request based on endpoint
             if ("/art/add".equals(path)) {
                 handleAdd(request, user);
             } else if ("/art/update".equals(path)) {
