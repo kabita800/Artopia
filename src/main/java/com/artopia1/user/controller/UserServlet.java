@@ -64,7 +64,7 @@ public class UserServlet extends HttpServlet {
                 sess.setAttribute("flashSuccess", "Account created successfully. You can sign in now.");
                 response.sendRedirect(request.getContextPath() + "/views/public/login.jsp");
             } else {
-                sess.setAttribute("flashError", "Could not register. Try a different email or check your database connection.");
+                sess.setAttribute("flashError", "Could not register. Try a different email");
                 response.sendRedirect(request.getContextPath() + "/views/public/register.jsp?error=failed");
             }
         }
@@ -87,7 +87,7 @@ public class UserServlet extends HttpServlet {
                 session.setMaxInactiveInterval(30 * 60); // 30 min
 
                 String welcome = user.getName() != null && !user.getName().isBlank()
-                        ? "Welcome back, " + user.getName() + ". You're signed in."
+                        ? "Welcome, " + user.getName() + ". You're signed in."
                         : "Signed in successfully.";
                 session.setAttribute("flashSuccess", welcome);
 
