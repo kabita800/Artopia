@@ -258,12 +258,13 @@
 
     <!-- STATS -->
     <div class="stats-grid">
-
+        // These stats would ideally be dynamic, fetched from the database
         <div class="stat-card">
             <h3>15K+</h3>
             <p>Total Users</p>
         </div>
 
+        // These stats would ideally be dynamic, fetched from the database
         <div class="stat-card">
             <h3>8.2K</h3>
             <p>Artworks</p>
