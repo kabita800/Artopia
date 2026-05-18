@@ -52,6 +52,8 @@
         padding: 0 24px;
     }
 
+    /* ── Top Bar: Brand + Social ── */
+
     .footer-top-bar {
         display: flex;
         align-items: center;
@@ -62,12 +64,16 @@
         flex-wrap: wrap;
     }
 
+    /* Brand */
+
     .footer-brand {
         display: flex;
         align-items: center;
         gap: 12px;
         text-decoration: none;
     }
+
+    /* Brand Icon */
 
     .footer-brand-icon {
         width: 36px;
@@ -80,6 +86,8 @@
         background: var(--c-gold-dim);
         flex-shrink: 0;
     }
+
+    /* Palette icon inside brand */
 
     .footer-brand-icon svg {
         width: 18px;

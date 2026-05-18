@@ -13,6 +13,8 @@
 <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* ── CSS Variables for Theme Colors ── */
+
     :root {
         --black: #080808;
         --off-black: #0f0f0f;
@@ -38,6 +40,8 @@
         font-family: 'Outfit', sans-serif;
     }
 
+    /* Container to center content and limit width */
+
     nav .container {
         max-width: 1280px;
         margin: 0 auto;
@@ -51,6 +55,8 @@
         height: 64px;
         gap: 2rem;
     }
+
+    /* Brand Logo and Name */
 
     .navbar-brand {
         font-family: 'Playfair Display', serif;

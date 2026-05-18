@@ -87,9 +87,6 @@
             z-index:1;
         }
 
-        /* ══════════════════════════════════════════════════════════
-           STICKY PAGE HEADER
-        ══════════════════════════════════════════════════════════ */
         .pg-header{
             position:sticky;
             top:0;
@@ -170,9 +167,6 @@
         }
         .btn-add:hover{opacity:.82}
 
-        /* ══════════════════════════════════════════════════════════
-           FLASH MESSAGES
-        ══════════════════════════════════════════════════════════ */
         .flash{
             border-left:2px solid;
             padding:.8rem 1.2rem;
@@ -184,9 +178,7 @@
         .flash-ok { border-color:#4caf77; background:rgba(76,175,119,.07); color:#4caf77; }
         .flash-err{ border-color:var(--danger); background:var(--danger-dim); color:#d46060; }
 
-        /* ══════════════════════════════════════════════════════════
-           TAB PANELS
-        ══════════════════════════════════════════════════════════ */
+
         .tab-panel{display:none;padding:3rem 0 7rem}
         .tab-panel.is-active{display:block}
 
@@ -212,9 +204,7 @@
             color:var(--text-3);
         }
 
-        /* ══════════════════════════════════════════════════════════
-           ALL-ARTWORKS — masonry columns
-        ══════════════════════════════════════════════════════════ */
+
         .masonry{
             columns:4;
             column-gap:1.2rem;
@@ -287,9 +277,7 @@
             color:var(--accent);
         }
 
-        /* ══════════════════════════════════════════════════════════
-           MY COLLECTION — structured grid
-        ══════════════════════════════════════════════════════════ */
+
         .my-grid{
             display:grid;
             grid-template-columns:repeat(auto-fill,minmax(285px,1fr));
@@ -456,9 +444,7 @@
         .ibtn-edit:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
         .ibtn-del:hover{border-color:var(--danger);color:#d46060;background:var(--danger-dim)}
 
-        /* ══════════════════════════════════════════════════════════
-           EMPTY STATE
-        ══════════════════════════════════════════════════════════ */
+
         .empty{
             grid-column:1/-1;
             text-align:center;
@@ -475,9 +461,7 @@
         }
         .empty p{font-size:11px;opacity:.6}
 
-        /* ══════════════════════════════════════════════════════════
-           MODALS
-        ══════════════════════════════════════════════════════════ */
+
         .overlay{
             position:fixed;inset:0;
             background:rgba(0,0,0,.80);
@@ -621,25 +605,19 @@
             border-top:1px solid var(--border);
         }
 
-        /* ══════════════════════════════════════════════════════════
-           SCROLLBAR
-        ══════════════════════════════════════════════════════════ */
+
         ::-webkit-scrollbar{width:5px}
         ::-webkit-scrollbar-track{background:var(--bg)}
         ::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:3px}
         ::-webkit-scrollbar-thumb:hover{background:var(--text-3)}
 
-        /* ══════════════════════════════════════════════════════════
-           ANIMATION
-        ══════════════════════════════════════════════════════════ */
+
         @keyframes fadeUp{
             from{opacity:0;transform:translateY(14px)}
             to  {opacity:1;transform:none}
         }
 
-        /* ══════════════════════════════════════════════════════════
-           RESPONSIVE
-        ══════════════════════════════════════════════════════════ */
+
         @media(max-width:640px){
             .wrap{padding:0 1.2rem}
             .fg-row{grid-template-columns:1fr}
@@ -653,9 +631,7 @@
 
 <jsp:include page="../components/navbar.jsp" />
 
-<%-- ════════════════════════════════════════════════════════
-     PAGE HEADER
-════════════════════════════════════════════════════════ --%>
+
 <header class="pg-header">
     <div class="wrap">
         <div class="header-left">
@@ -688,9 +664,7 @@
 
 <main class="wrap">
 
-    <%-- ══════════════════════════════════════════════════════
-         TAB 1 — ALL ARTWORKS
-    ══════════════════════════════════════════════════════ --%>
+
     <section class="tab-panel is-active" id="panel-all">
 
         <div class="sec-head">
@@ -729,9 +703,7 @@
         </div>
     </section>
 
-    <%-- ══════════════════════════════════════════════════════
-         TAB 2 — MY COLLECTION
-    ══════════════════════════════════════════════════════ --%>
+
     <section class="tab-panel" id="panel-mine">
 
         <div class="sec-head">
