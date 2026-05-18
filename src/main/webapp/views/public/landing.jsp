@@ -10,6 +10,8 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* ── CSS Variables for Theme Colors ── */
+
     :root {
       --black: #080808;
       --off-black: #0f0f0f;
@@ -27,6 +29,7 @@
     }
 
     html { scroll-behavior: smooth; }
+    /* Base styles for body and typography */
 
     body {
       background: var(--black);
@@ -56,6 +59,7 @@
       background: radial-gradient(circle, rgba(201,169,110,0.06) 0%, transparent 70%);
       pointer-events: none;
     }
+    /* Subtle radial gradient accent in the bottom-left corner of the hero section */
 
     .hero::after {
       content: '';
@@ -84,6 +88,7 @@
       width: 32px; height: 1px;
       background: var(--accent);
     }
+    /* Thin line before the eyebrow text for visual emphasis */
 
     .hero h1 {
       font-family: 'Playfair Display', serif;
