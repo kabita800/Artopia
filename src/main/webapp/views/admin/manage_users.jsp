@@ -301,6 +301,8 @@
             <p>Manage all users, artists, and buyers from one place.</p>
         </div>
 
+        // The "Add User" button would ideally open a modal form to create a new user
+
         <button class="add-btn">
             + Add User
         </button>
@@ -309,6 +311,8 @@
 
     <!-- TABLE -->
     <div class="table-card">
+
+        // The table header contains the title and a search box for filtering users.
 
         <div class="table-header">
 
@@ -321,7 +325,8 @@
         </div>
 
         <table>
-
+            
+            // The table body would ideally be generated dynamically from the database, looping through user records.
             <thead>
             <tr>
                 <th>User</th>
@@ -335,6 +340,7 @@
             <tbody>
 
             <!-- USER 1 -->
+             // These user rows are hardcoded examples. In a real application.
             <tr>
 
                 <td>
