@@ -1,0 +1,38 @@
+# Maven
+target/
+/.mvn/wrapper/maven-wrapper.jar
+
+# Build outputs
+out/
+build/
+
+# IDEs and editors
+.idea/
+*.iml
+.vscode/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*~
+~$*
+*.swp
+
+# OneDrive
+*.lnk
