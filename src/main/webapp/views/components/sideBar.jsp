@@ -6,6 +6,8 @@
         --accent: #c9a96e;
     }
 
+    /* ── Admin Sidebar Styles ── */
+
     .admin-sidebar{
         width:260px;
         height:100vh;
@@ -29,6 +31,8 @@
         margin-bottom:40px;
     }
 
+    /* Accent color for the "ART" part of the logo */
+
     .admin-logo span{
         color:var(--accent);
     }
@@ -49,6 +53,7 @@
         font-size:0.95rem;
         font-family:'Inter', sans-serif;
     }
+    /* Hover and active states for menu items */
 
     .admin-menu a:hover,
     .admin-menu a.active{
