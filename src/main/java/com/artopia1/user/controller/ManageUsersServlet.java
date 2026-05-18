@@ -9,8 +9,12 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 
+
+
 @WebServlet("/admin/manageUsers")
 public class ManageUsersServlet extends HttpServlet {
+
+    // DAO layer for user management operations
 
     private final UserDAO userDAO = new UserDAO();
 
@@ -20,6 +24,8 @@ public class ManageUsersServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String keyword = request.getParameter("search");
+
+        // Fetch users based on search keyword , otherwise get all users
 
         List<User> users = (keyword != null && !keyword.isBlank())
                 ? userDAO.searchUsers(keyword.trim())
@@ -38,6 +44,8 @@ public class ManageUsersServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String action = request.getParameter("action");
+
+        // Only handle delete action for now (can extend to edit/add later)
 
         if ("delete".equalsIgnoreCase(action)) {
             try {
