@@ -103,18 +103,18 @@
 
         <div class="admin-menu">
 
-            <a href="admin_dashboard.jsp"
-               class="<%= uri.contains("admin_dashboard.jsp") ? "active" : "" %>">
+            <a href="${pageContext.request.contextPath}/admin/dashboard"
+               class="<%= uri.contains("dashboard") || uri.contains("admin_dashboard") ? "active" : "" %>">
                 Dashboard
             </a>
 
-            <a href="manage_users.jsp"
-               class="<%= uri.contains("manage_users.jsp") ? "active" : "" %>">
+            <a href="${pageContext.request.contextPath}/admin/manageUsers"
+               class="<%= uri.contains("manageUsers") || uri.contains("manage_users") ? "active" : "" %>">
                 Manage Users
             </a>
 
-            <a href="manage_art.jsp"
-               class="<%= uri.contains("manage_art.jsp") ? "active" : "" %>">
+            <a href="${pageContext.request.contextPath}/admin/manageArts"
+               class="<%= uri.contains("manage_art") || uri.contains("manageArts") ? "active" : "" %>">
                 Manage Arts
             </a>
 

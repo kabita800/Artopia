@@ -252,4 +252,79 @@ public class ArtDAO {
         }
         return null;
     }
+
+    public Art findByIdAdmin(int artId) {
+        String sql = """
+                SELECT a.*, u.name AS artist_name
+                FROM art a JOIN user u ON u.id = a.artist_id
+                WHERE a.id=?
+                """;
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, artId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapRow(rs);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean updateAdmin(int artId, String title, String description, String category,
+                               double price, String newImageFileNameOrNull, boolean isSold) {
+        int soldInt = isSold ? 1 : 0;
+        if (newImageFileNameOrNull != null && !newImageFileNameOrNull.isEmpty()) {
+            String sql = """
+                    UPDATE art SET title=?, description=?, category=?, price=?, image_url=?, sold=?
+                    WHERE id=?
+                    """;
+            try (Connection conn = DBConnection.getConnection();
+                 PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, title);
+                ps.setString(2, description != null ? description : "");
+                ps.setString(3, category);
+                ps.setDouble(4, price);
+                ps.setString(5, newImageFileNameOrNull);
+                ps.setInt(6, soldInt);
+                ps.setInt(7, artId);
+                return ps.executeUpdate() > 0;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            String sql = """
+                    UPDATE art SET title=?, description=?, category=?, price=?, sold=?
+                    WHERE id=?
+                    """;
+            try (Connection conn = DBConnection.getConnection();
+                 PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, title);
+                ps.setString(2, description != null ? description : "");
+                ps.setString(3, category);
+                ps.setDouble(4, price);
+                ps.setInt(5, soldInt);
+                ps.setInt(6, artId);
+                return ps.executeUpdate() > 0;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    public boolean deleteAdmin(int artId) {
+        String sql = "DELETE FROM art WHERE id=?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, artId);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
+

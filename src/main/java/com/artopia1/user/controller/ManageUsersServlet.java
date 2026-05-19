@@ -28,7 +28,7 @@ public class ManageUsersServlet extends HttpServlet {
         request.setAttribute("users", users);
         request.setAttribute("search", keyword);
 
-        request.getRequestDispatcher("/views/admin/manageUsers.jsp")
+        request.getRequestDispatcher("/views/admin/manage_users.jsp")
                 .forward(request, response);
     }
 

@@ -3,6 +3,7 @@
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -417,145 +418,50 @@
                 </thead>
 
                 <tbody>
-
-                <!-- ROW 1 -->
-                <tr>
-
-                    <td>
-                        <div class="art-info">
-
-                            <img src="${pageContext.request.contextPath}/views/images/art1.jpg"
-                                 class="art-image"
-                                 alt="Art">
-
-                            <div>
-                                <div class="art-name">Golden Sunset</div>
-                                <div class="artist-name">by Kabita Giri</div>
-                            </div>
-
-                        </div>
-                    </td>
-
-                    <td>Digital Art</td>
-
-                    <td>$250</td>
-
-                    <td>
-                        <span class="status available">
-                            Available
-                        </span>
-                    </td>
-
-                    <td>May 02, 2026</td>
-
-                    <td>
-                        <div class="action-buttons">
-
-                            <button class="btn edit-btn">
-                                Edit
-                            </button>
-
-                            <button class="btn delete-btn">
-                                Delete
-                            </button>
-
-                        </div>
-                    </td>
-
-                </tr>
-
-                <!-- ROW 2 -->
-                <tr>
-
-                    <td>
-                        <div class="art-info">
-
-                            <img src="${pageContext.request.contextPath}/views/images/art2.jpg"
-                                 class="art-image"
-                                 alt="Art">
-
-                            <div>
-                                <div class="art-name">Mountain View</div>
-                                <div class="artist-name">by Soni Shrestha</div>
-                            </div>
-
-                        </div>
-                    </td>
-
-                    <td>Painting</td>
-
-                    <td>$400</td>
-
-                    <td>
-                        <span class="status sold">
-                            Sold
-                        </span>
-                    </td>
-
-                    <td>April 28, 2026</td>
-
-                    <td>
-                        <div class="action-buttons">
-
-                            <button class="btn edit-btn">
-                                Edit
-                            </button>
-
-                            <button class="btn delete-btn">
-                                Delete
-                            </button>
-
-                        </div>
-                    </td>
-
-                </tr>
-
-                <!-- ROW 3 -->
-                <tr>
-
-                    <td>
-                        <div class="art-info">
-
-                            <img src="${pageContext.request.contextPath}/views/images/art3.jpg"
-                                 class="art-image"
-                                 alt="Art">
-
-                            <div>
-                                <div class="art-name">Abstract Soul</div>
-                                <div class="artist-name">by Utshab Gautam</div>
-                            </div>
-
-                        </div>
-                    </td>
-
-                    <td>Abstract</td>
-
-                    <td>$320</td>
-
-                    <td>
-                        <span class="status available">
-                            Available
-                        </span>
-                    </td>
-
-                    <td>May 05, 2026</td>
-
-                    <td>
-                        <div class="action-buttons">
-
-                            <button class="btn edit-btn">
-                                Edit
-                            </button>
-
-                            <button class="btn delete-btn">
-                                Delete
-                            </button>
-
-                        </div>
-                    </td>
-
-                </tr>
-
+                <c:choose>
+                    <c:when test="${empty arts}">
+                        <tr>
+                            <td colspan="6" style="text-align:center; padding:30px; color:var(--muted);">No artworks found.</td>
+                        </tr>
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach var="art" items="${arts}">
+                            <tr>
+                                <td>
+                                    <div class="art-info">
+                                        <img src="${pageContext.request.contextPath}/images/art/${art.imageUrl}"
+                                             class="art-image"
+                                             alt="Art"
+                                             onerror="this.src='${pageContext.request.contextPath}/views/images/placeholder.jpg'">
+                                        <div>
+                                            <div class="art-name">${art.title}</div>
+                                            <div class="artist-name">by ${art.artistName}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>${art.category}</td>
+                                <td>$${art.price}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${art.sold}">
+                                            <span class="status sold">Sold</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="status available">Available</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>${art.formattedDate}</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn edit-btn" onclick="location.href='${pageContext.request.contextPath}/admin/editArt?id=${art.id}'">Edit</button>
+                                        <button class="btn delete-btn" onclick="confirmDelete(${art.id})">Delete</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
                 </tbody>
 
             </table>
@@ -565,6 +471,29 @@
     </div>
 
 </div>
+
+<script>
+    function confirmDelete(artId) {
+        if (confirm("Are you sure you want to delete this artwork? This cannot be undone.")) {
+            const form = document.createElement("form");
+            form.method = "POST";
+            form.action = "${pageContext.request.contextPath}/admin/manageArts";
+
+            const actionInput = document.createElement("input");
+            actionInput.name  = "action";
+            actionInput.value = "delete";
+
+            const idInput = document.createElement("input");
+            idInput.name  = "id";
+            idInput.value = artId;
+
+            form.appendChild(actionInput);
+            form.appendChild(idInput);
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+</script>
 
 </body>
 </html>

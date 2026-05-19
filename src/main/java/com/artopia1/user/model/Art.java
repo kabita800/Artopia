@@ -114,4 +114,10 @@ public class Art {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
+    public String getFormattedDate() {
+        if (createdAt == null) return "";
+        java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("MMM dd, yyyy");
+        return createdAt.format(formatter);
+    }
 }

@@ -635,7 +635,7 @@
                     <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
                 </svg>
                 Cart
-                <span class="cart-count" id="cartCount">0</span>
+                <span class="cart-count ${sessionScope.cart != null && sessionScope.cart.size() > 0 ? 'show' : ''}" id="cartCount">${sessionScope.cart != null ? sessionScope.cart.size() : 0}</span>
             </button>
         </div>
 
@@ -792,7 +792,7 @@
                 <%-- Logged-in: normal add-to-cart --%>
                 <button class="btn-cart"
                         id="cartBtn-<%= art.getId() %>"
-                        onclick="addToCart('<%= art.getId() %>','<%= titleEsc %>','<%= String.format("%.2f", art.getPrice()) %>',this)">
+                        onclick="addToCart('<%= art.getId() %>','<%= titleEsc %>','<%= String.format("%.2f", art.getPrice()) %>','<%= artistEsc %>','<%= src %>','<%= art.getCategory() %>',this)">
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
                         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
@@ -1043,7 +1043,7 @@
 
     /*  DETAIL MODAL */
     function openDetail(id, title, artist, cat, desc, price, imgSrc, sold) {
-        activeDetail = { id:id, title:title, price:price };
+        activeDetail = { id:id, title:title, price:price, artist:artist, imgSrc:imgSrc, cat:cat };
         document.getElementById('d-img').src            = imgSrc;
         document.getElementById('d-img').alt            = title;
         document.getElementById('d-cat').textContent    = cat;
@@ -1102,7 +1102,7 @@
     function addToCartFromModal() {
         if (!activeDetail) return;
         if (!isLoggedIn) { redirectToLogin(); return; }
-        addToCart(activeDetail.id, activeDetail.title, activeDetail.price,
+        addToCart(activeDetail.id, activeDetail.title, activeDetail.price, activeDetail.artist, activeDetail.imgSrc, activeDetail.cat,
             document.getElementById('cartBtn-' + activeDetail.id));
         var dBtn = document.getElementById('d-cartBtn');
         dBtn.className = 'btn-cart-lg added';
@@ -1118,19 +1118,31 @@
     });
 
     /* CART */
-    function addToCart(id, title, price, btn) {
+    function addToCart(id, title, price, artist, imgSrc, cat, btn) {
         /* Guard: guest cannot add to cart */
         if (!isLoggedIn) {
             redirectToLogin();
             return;
         }
-        var alreadyIn = cart.some(function(c){ return c.id == id; });
-        if (alreadyIn) { showToast('"' + title + '" is already in your cart.', false); return; }
-        cart.push({ id:id, title:title, price:price });
-        localStorage.setItem('artopia_cart', JSON.stringify(cart));
-        markCardAdded(id);
-        updateCartUI();
-        showToast('"' + title + '" added to cart.', false);
+
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '<%= ctx %>/cart';
+
+        const actionInput = document.createElement('input');
+        actionInput.type = 'hidden';
+        actionInput.name = 'action';
+        actionInput.value = 'add';
+        form.appendChild(actionInput);
+
+        const idInput = document.createElement('input');
+        idInput.type = 'hidden';
+        idInput.name = 'id';
+        idInput.value = id;
+        form.appendChild(idInput);
+
+        document.body.appendChild(form);
+        form.submit();
     }
 
     function markCardAdded(id) {

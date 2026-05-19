@@ -1,15 +1,7 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: User
-  Date: 12/5/2026
-  Time: 12:45 pm
-  To change this template use File | Settings | File Templates.
---%>
-<%--
-   CART PAGE - Shopping cart with items, quantities, and order summary
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -490,8 +482,7 @@
             <div class="cart-hero-inner">
                 <h1>Your Cart</h1>
                 <p class="item-count">
-                    <span>${sessionScope.cartItemCount != null ? sessionScope.cartItemCount : 0}</span>
-                    &nbsp;item${sessionScope.cartItemCount != 1 ? 's' : ''}
+                    <span>${cart != null ? cart.size() : 0}</span> items
                 </p>
             </div>
         </div>
@@ -505,113 +496,69 @@
             <div class="cart-layout">
 
                 <!-- ── Left: Items ── -->
-                <div class="cart-items">
-
-                    <%-- Check if cart is empty --%>
-                    <%
-                        List<?> cartItems = (List<?>) session.getAttribute("cartItems");
-                        boolean isEmpty = (cartItems == null || cartItems.isEmpty());
-                    %>
-
-                    <% if (isEmpty) { %>
-                    <!-- Empty State -->
-                    <div class="empty-cart">
-                        <span class="empty-icon">🛒</span>
-                        <h3>Your cart is empty</h3>
-                        <p>Looks like you haven't added any artwork yet. Start exploring!</p>
-                        <a href="${pageContext.request.contextPath}/gallery" class="btn-primary">
-                            Browse Gallery
-                        </a>
-                    </div>
-
-                    <% } else { %>
-
-                    <%-- Dynamically render cart items --%>
-                    <%-- Replace the block below with JSTL forEach over cartItems --%>
-
-                    <!-- Sample Item 1 (replace with dynamic rendering) -->
-                    <div class="cart-item">
-                        <div class="cart-item-img-placeholder">🖼</div>
-                        <div class="cart-item-details">
-                            <div class="artwork-title">Echoes in Blue</div>
-                            <div class="artist-name">Maria Santos</div>
-                            <div class="item-meta">
-                                <span class="tag">Oil on Canvas</span>
-                                <span class="tag">60 × 80 cm</span>
-                                <span class="tag">Original</span>
+                <div class="cart-items" id="cartItemsContainer">
+                    <c:choose>
+                        <c:when test="${empty cart}">
+                            <div class="empty-cart">
+                                <span class="empty-icon">🛒</span>
+                                <h3>Your cart is empty</h3>
+                                <p>Looks like you haven't added any artwork yet. Start exploring!</p>
+                                <a href="${pageContext.request.contextPath}/gallery" class="btn-primary">
+                                    Browse Gallery
+                                </a>
                             </div>
-                        </div>
-                        <div class="cart-item-actions">
-                            <div class="item-price">$480</div>
-                            <div class="qty-control">
-                                <button class="qty-btn" onclick="changeQty(this, -1)" aria-label="Decrease quantity">−</button>
-                                <input class="qty-display" type="text" value="1" readonly aria-label="Quantity">
-                                <button class="qty-btn" onclick="changeQty(this, 1)" aria-label="Increase quantity">+</button>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach var="item" items="${cart}">
+                                <div class="cart-item">
+                                    <c:choose>
+                                        <c:when test="${not empty item.imageUrl}">
+                                            <img src="${pageContext.request.contextPath}/images/art/${item.imageUrl}" class="cart-item-img" alt="${item.title}" onerror="this.src='${pageContext.request.contextPath}/views/images/placeholder.jpg'">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div class="cart-item-img-placeholder">🖼</div>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <div class="cart-item-details">
+                                        <div class="artwork-title">${item.title}</div>
+                                        <div class="artist-name">by ${not empty item.artistName ? item.artistName : 'Unknown'}</div>
+                                        <div class="item-meta">
+                                            <c:if test="${not empty item.category}">
+                                                <span class="tag">${item.category}</span>
+                                            </c:if>
+                                        </div>
+                                    </div>
+                                    <div class="cart-item-actions">
+                                        <div class="item-price">$<fmt:formatNumber value="${item.price}" pattern="#,##0.00"/></div>
+                                        <form action="${pageContext.request.contextPath}/cart" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to remove this item from your cart?');">
+                                            <input type="hidden" name="action" value="remove">
+                                            <input type="hidden" name="id" value="${item.id}">
+                                            <button type="submit" class="btn-remove">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                    <path d="M19 6l-1 14H6L5 6"></path>
+                                                    <path d="M10 11v6M14 11v6"></path>
+                                                </svg>
+                                                Remove
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                            <div style="margin-top: 1rem; text-align: right;">
+                                <form action="${pageContext.request.contextPath}/cart" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to clear your entire cart?');">
+                                    <input type="hidden" name="action" value="clear">
+                                    <button type="submit" class="btn-remove" style="font-size:.82rem; margin-left: auto;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;">
+                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                            <path d="M19 6l-1 14H6L5 6"></path>
+                                        </svg>
+                                        Clear entire cart
+                                    </button>
+                                </form>
                             </div>
-                            <form method="POST" action="${pageContext.request.contextPath}/cart/remove" style="display:inline;">
-                                <input type="hidden" name="itemId" value="1">
-                                <button type="submit" class="btn-remove">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                        <path d="M19 6l-1 14H6L5 6"></path>
-                                        <path d="M10 11v6M14 11v6"></path>
-                                    </svg>
-                                    Remove
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <!-- Sample Item 2 -->
-                    <div class="cart-item">
-                        <div class="cart-item-img-placeholder">🖼</div>
-                        <div class="cart-item-details">
-                            <div class="artwork-title">Golden Hour Fragment</div>
-                            <div class="artist-name">Arjun Mehta</div>
-                            <div class="item-meta">
-                                <span class="tag">Acrylic</span>
-                                <span class="tag">50 × 50 cm</span>
-                                <span class="tag">Print</span>
-                            </div>
-                        </div>
-                        <div class="cart-item-actions">
-                            <div class="item-price">$120</div>
-                            <div class="qty-control">
-                                <button class="qty-btn" onclick="changeQty(this, -1)" aria-label="Decrease quantity">−</button>
-                                <input class="qty-display" type="text" value="1" readonly aria-label="Quantity">
-                                <button class="qty-btn" onclick="changeQty(this, 1)" aria-label="Increase quantity">+</button>
-                            </div>
-                            <form method="POST" action="${pageContext.request.contextPath}/cart/remove" style="display:inline;">
-                                <input type="hidden" name="itemId" value="2">
-                                <button type="submit" class="btn-remove">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                        <path d="M19 6l-1 14H6L5 6"></path>
-                                        <path d="M10 11v6M14 11v6"></path>
-                                    </svg>
-                                    Remove
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <% } %>
-
-                    <!-- Clear Cart link (only when not empty) -->
-                    <% if (!isEmpty) { %>
-                    <div style="margin-top: 1rem; text-align: right;">
-                        <form method="POST" action="${pageContext.request.contextPath}/cart/clear" style="display:inline;">
-                            <button type="submit" class="btn-remove" style="font-size:.82rem;">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;">
-                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                    <path d="M19 6l-1 14H6L5 6"></path>
-                                </svg>
-                                Clear entire cart
-                            </button>
-                        </form>
-                    </div>
-                    <% } %>
-
+                        </c:otherwise>
+                    </c:choose>
                 </div><!-- /cart-items -->
 
                 <!-- ── Right: Order Summary ── -->
@@ -620,19 +567,19 @@
 
                     <div class="summary-row">
                         <span>Subtotal</span>
-                        <span>$600.00</span>
+                        <span id="summarySubtotal">$<fmt:formatNumber value="${subtotal}" pattern="#,##0.00"/></span>
                     </div>
                     <div class="summary-row">
                         <span>Shipping</span>
                         <span>Calculated at checkout</span>
                     </div>
                     <div class="summary-row">
-                        <span>Tax (est.)</span>
-                        <span>$54.00</span>
+                        <span>Tax (est. 9%)</span>
+                        <span id="summaryTax">$<fmt:formatNumber value="${subtotal * 0.09}" pattern="#,##0.00"/></span>
                     </div>
                     <div class="summary-row">
                         <span>Discount</span>
-                        <span style="color: #6fcf6f;">— $0.00</span>
+                        <span style="color: #6fcf6f;" id="summaryDiscount">— $0.00</span>
                     </div>
 
                     <!-- Promo Code -->
@@ -644,7 +591,7 @@
 
                     <div class="summary-row total">
                         <span>Total</span>
-                        <span class="total-price">$654.00</span>
+                        <span class="total-price" id="summaryTotal">$<fmt:formatNumber value="${subtotal + (subtotal * 0.09)}" pattern="#,##0.00"/></span>
                     </div>
 
                     <a href="${pageContext.request.contextPath}/checkout" class="btn-checkout">
@@ -699,32 +646,45 @@
 
 <script src="${pageContext.request.contextPath}/views/js/script.js"></script>
 <script>
-    // ── Quantity Control ──
-    function changeQty(btn, delta) {
-        const control = btn.closest('.qty-control');
-        const display = control.querySelector('.qty-display');
-        let val = parseInt(display.value) || 1;
-        val = Math.max(1, val + delta);
-        display.value = val;
-        // TODO: fire AJAX to update server-side cart quantity
+    let currentDiscountPercent = 0;
+    const initialSubtotal = ${subtotal != null ? subtotal : 0};
+
+    function updateSummary() {
+        const discountAmount = initialSubtotal * currentDiscountPercent;
+        const subtotalAfterDiscount = initialSubtotal - discountAmount;
+        const tax = subtotalAfterDiscount * 0.09;
+        const total = subtotalAfterDiscount + tax;
+
+        document.getElementById('summarySubtotal').textContent = '$' + initialSubtotal.toFixed(2);
+        document.getElementById('summaryDiscount').textContent = '— $' + discountAmount.toFixed(2);
+        document.getElementById('summaryTax').textContent = '$' + tax.toFixed(2);
+        document.getElementById('summaryTotal').textContent = '$' + total.toFixed(2);
     }
 
     // ── Promo Code ──
     function applyPromo() {
         const code  = document.getElementById('promoCode').value.trim().toUpperCase();
         const msg   = document.getElementById('promoMessage');
-        const valid = { 'ART10': '10% off applied!', 'ARTOPIA20': '20% off applied!' };
+        const valid = { 'ART10': 0.10, 'ARTOPIA20': 0.20 };
+
         if (!code) {
             msg.style.color = 'var(--muted)';
             msg.textContent = 'Please enter a promo code.';
+            currentDiscountPercent = 0;
+            updateSummary();
             return;
         }
+
         if (valid[code]) {
             msg.style.color = '#6fcf6f';
-            msg.textContent = '✓ ' + valid[code];
+            msg.textContent = '✓ ' + (valid[code]*100) + '% off applied!';
+            currentDiscountPercent = valid[code];
+            updateSummary();
         } else {
             msg.style.color = 'var(--danger)';
             msg.textContent = '✕ Invalid or expired code.';
+            currentDiscountPercent = 0;
+            updateSummary();
         }
     }
 
@@ -732,8 +692,11 @@
     document.getElementById('promoCode').addEventListener('keydown', function(e) {
         if (e.key === 'Enter') applyPromo();
     });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Clear local storage cart if it was left behind
+        localStorage.removeItem('artopia_cart');
+    });
 </script>
 </body>
-</html>
-
 </html>

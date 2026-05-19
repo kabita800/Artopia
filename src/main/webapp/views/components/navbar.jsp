@@ -170,13 +170,19 @@
 
     .cart-badge{
         position:absolute;
-        top:-3px;
-        right:-3px;
+        top:-8px;
+        right:-8px;
         background:var(--accent);
         color:var(--black);
         border-radius:50%;
-        width:10px;
-        height:10px;
+        min-width:18px;
+        height:18px;
+        font-size: 10px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 4px;
     }
 
     /* BUTTONS */
@@ -544,6 +550,22 @@
             navbarToggle.innerHTML = '✕';
         } else {
             navbarToggle.innerHTML = '☰';
+        }
+    });
+
+    // Update cart badge across all pages
+    document.addEventListener('DOMContentLoaded', function() {
+        const cartBadgeElems = document.querySelectorAll('.cart-badge');
+        if (cartBadgeElems.length > 0) {
+            const cart = JSON.parse(localStorage.getItem('artopia_cart') || '[]');
+            cartBadgeElems.forEach(el => {
+                el.textContent = cart.length;
+                if (cart.length === 0) {
+                    el.style.display = 'none';
+                } else {
+                    el.style.display = 'flex';
+                }
+            });
         }
     });
 
