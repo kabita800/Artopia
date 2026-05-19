@@ -1,5 +1,7 @@
 package com.artopia1.user.model;
 
+// User model representing the user entity in the system
+
 public class User {
     private int id;
     private String name;
@@ -18,6 +20,7 @@ public class User {
     public String getName() {
         return name;
     }
+    // this code is used to get the first letter of the user's name for display in the UI (e.g., avatar)
 
     public void setName(String name) {
         this.name = name;
@@ -67,6 +70,7 @@ public class User {
                 ? String.valueOf(name.charAt(0)).toUpperCase()
                 : "?";
     }
+    // this code is used to assign css class based on user role for styling in jsp
 
     public String getRoleCssClass() {
         if (role == null) return "buyer-role";
