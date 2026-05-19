@@ -8,8 +8,10 @@ import jakarta.servlet.http.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet("/cart")
 public class CartServlet extends HttpServlet {
@@ -79,6 +81,28 @@ public class CartServlet extends HttpServlet {
             }
         } else if ("clear".equalsIgnoreCase(action)) {
             cart.clear();
+            session.removeAttribute("discountPercent");
+            session.removeAttribute("promoCode");
+
+        } else if ("applyPromo".equalsIgnoreCase(action)) {
+            // Valid promo codes: code -> discount fraction
+            Map<String, Double> validCodes = new HashMap<>();
+            validCodes.put("ART10",    0.10);
+            validCodes.put("ARTOPIA20", 0.20);
+
+            String code = request.getParameter("promoCode");
+            if (code != null) code = code.trim().toUpperCase();
+
+            if (code != null && validCodes.containsKey(code)) {
+                session.setAttribute("discountPercent", validCodes.get(code));
+                session.setAttribute("promoCode", code);
+            } else {
+                session.removeAttribute("discountPercent");
+                session.removeAttribute("promoCode");
+            }
+            // After storing promo, redirect straight to checkout
+            response.sendRedirect(request.getContextPath() + "/checkout");
+            return;
         }
 
         response.sendRedirect(request.getContextPath() + "/cart");

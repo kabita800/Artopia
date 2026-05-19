@@ -594,13 +594,18 @@
                         <span class="total-price" id="summaryTotal">$<fmt:formatNumber value="${subtotal + (subtotal * 0.09)}" pattern="#,##0.00"/></span>
                     </div>
 
-                    <a href="${pageContext.request.contextPath}/checkout" class="btn-checkout">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-                            <line x1="1" y1="10" x2="23" y2="10"></line>
-                        </svg>
-                        Proceed to Checkout
-                    </a>
+                    <form action="${pageContext.request.contextPath}/cart" method="post" id="checkoutForm">
+                        <input type="hidden" name="action" value="applyPromo">
+                        <input type="hidden" name="promoCode" id="promoCodeHidden" value="">
+                        <button type="submit" class="btn-checkout"
+                                <c:if test="${empty cart}">disabled style="opacity:.5;cursor:not-allowed;"</c:if>>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                <line x1="1" y1="10" x2="23" y2="10"></line>
+                            </svg>
+                            Proceed to Checkout
+                        </button>
+                    </form>
 
                     <a href="${pageContext.request.contextPath}/gallery" class="btn-continue">
                         ← Continue Shopping
@@ -691,6 +696,12 @@
     // Allow Enter key on promo input
     document.getElementById('promoCode').addEventListener('keydown', function(e) {
         if (e.key === 'Enter') applyPromo();
+    });
+
+    // Before submitting checkout form, copy the typed promo code into the hidden field
+    document.getElementById('checkoutForm').addEventListener('submit', function() {
+        document.getElementById('promoCodeHidden').value =
+            document.getElementById('promoCode').value.trim();
     });
 
     document.addEventListener('DOMContentLoaded', () => {
